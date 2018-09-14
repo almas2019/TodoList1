@@ -7,12 +7,11 @@ public class TodoList {
         leftmssg();
     }
 
-
     public static void title() {
         System.out.println("My To-Dos");
     } // Display the string.
 
     public static void leftmssg() {
-    System.out.println("You have some tasks left");}
+    System.out.println("You have some tasks left today");}
 }
 
