@@ -1,6 +1,12 @@
 package ui;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -11,14 +17,13 @@ public class Model
 //Requires: String input
 //Modifies: this, listSize, numdone
 //Effects: Using user input creates new entries and changes entries in the list
-    public Model() {
+    public Model() throws IOException {
         String option = "";
 
-
         while (true) {
-
-            System.out.println("Please select an option: [1] Add an item  [2] Cross off an item [3] show all items");
+            System.out.println("Please select an option: [1] Add an item  [2] Cross off an item [3] show all items [4]Save List [5]Load List [6] quit");
             option = scanner.nextLine();
+
             System.out.println("you selected: " + option);
             if (option.equals("1")) {
                 enter(list);
@@ -33,8 +38,17 @@ public class Model
             if (option.equals("3")) {
                 printItems();
                 int lengths = listSize(list.listentries);
-                System.out.println(lengths);
-            } else if (option.equals("quit")) {
+                System.out.println(lengths);}
+            if (option.equals("4")) {
+                System.out.println("Please write the name of the file you would like to save");
+                String fileName = scanner.nextLine();
+                list.save(fileName+".txt");}
+                if (option.equals("5")) {
+                    System.out.println("Please write the name of the file you would like to load");
+                    String loadName = scanner.nextLine();
+                    list.load(loadName+".txt");
+                    System.out.println("ToDo List Loaded");
+            } else if (option.equals("6")) {
                 System.out.println("This application will now shut down");
                 break;
             }
@@ -51,7 +65,7 @@ public class Model
         String addition = scanner.nextLine();
         System.out.println("Enter the date the item is due in format YYYY-MM-DD");
         String date= scanner.nextLine();
-        LocalDate localDate = LocalDate.parse(date); //this line is referenced from mkyong.com
+        LocalDate  localDate = LocalDate.parse(date); //this line is referenced from mkyong.com
         list.newEntry(addition, localDate);
         System.out.println("Item Added");
 
@@ -75,5 +89,8 @@ public class Model
         private int listSize (ArrayList < Entry > list1){
         System.out.println("These are the total number of tasks that are on your list");
         return list1.size();
+
     }
-    }
+
+
+        }

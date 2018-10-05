@@ -10,3 +10,10 @@ Added a DailyList class
 created a while loop containing 4 basic functions: adding an item to a not done list, moving an item from a not done to a done list, printing out all items in the list
 also creating a method to quit the loop
 Code adopted from logging calculator
+
+//For Sept 28
+Added a Model Class, renamed DailyList class to ListEntries, Added an entry and datefeatures class.
+created data abstractions and created tests DateFeatures and ListEntries
+
+//For Oct.5
+added Saveable and Loadable interfaces and implemented those interfaces

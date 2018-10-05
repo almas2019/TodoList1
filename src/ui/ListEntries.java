@@ -1,13 +1,17 @@
 package ui;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.Scanner;
 
-public class ListEntries {
+public class ListEntries implements Loadable,Saveable {
     public ArrayList<Entry> listentries = new ArrayList<>();
 
-
+//Code reference: Logging Calculator
 //REQUIRES: A non empty list,
 //MODIFIES: this
 //Effects: adds a new Entry to the TodoList
@@ -62,7 +66,40 @@ public boolean checkDuplicates(String value) {
             System.out.println("Name of Task:" + entry.getName());
             System.out.println("Status:"+ entry.getStatus());
             System.out.println("Due Date:"+entry.getDueDate());
-            System.out.println("Days Left To do Tasks:"+entry.getDaysLeft());
+            System.out.println("Days Left To do Tasks:"+entry.getDaysLeft());}}
+
+            public void save(String s) throws IOException {
+                File file = new File("/Users/almas/Desktop/CPSC 210/projectw1_team200/"+s);
+                if (!file.exists()) {
+                    PrintWriter writer = new PrintWriter(s,"UTF-8");
+                    for (Entry e: listentries) {
+                        writer.println(e.getName());
+                        writer.println(e.getStatus());
+                        writer.println(e.getDueDate());}
+                    writer.close();}
+                PrintWriter writer = new PrintWriter(s,"UTF-8");
+                for (Entry e: listentries) {
+                    writer.println(e.getName());
+                    writer.println(e.getStatus());
+                    writer.println(e.getDueDate()); }
+                writer.close();}
+    public void load(String s) throws IOException{
+        File file = new File("/Users/almas/Desktop/CPSC 210/projectw1_team200/"+s);//this part referenced GeeksforGeeks.org
+        Scanner sc = new Scanner(file,"UTF-8");
+        while(sc.hasNextLine()) {
+            Entry e = new Entry();
+            DateFeatures date1 = new DateFeatures();
+            String name = sc.nextLine();
+            e.setName(name);
+            String status = sc.nextLine();
+            e.setStatus(status);
+            String date = sc.nextLine();
+            LocalDate  localDate = LocalDate.parse(date);
+            e.setDueDate(localDate);
+            if (e.getStatus().equals("Not Done"))
+            e.setDaysLeft(date1.getDayCount(e.getDueDate()));
+            else {e.setDaysLeft(0);}
+            listentries.add(e);
         }
 
 

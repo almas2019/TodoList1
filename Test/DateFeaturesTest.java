@@ -15,5 +15,5 @@ LocalDate localDate = LocalDate.parse(date2);
 
 @Test
 public void testDaysBetween() {
-assertEquals(date.getDayCount(localDate), 30);
+assertEquals(date.getDayCount(localDate), 23);
 }}
