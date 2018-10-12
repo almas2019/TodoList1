@@ -22,7 +22,7 @@ return weeklater;}
 //REQUIRES: a Date in the format YYYY-MM-DD
 // Effects: Returns the differences between today and the dueDate
    public long getDayCount(LocalDate entrydate) {
-    long daysBetween = ChronoUnit.DAYS.between(today, entrydate); //code reference stackoverflow user:
+    long daysBetween = ChronoUnit.DAYS.between(today, entrydate); //code reference stackoverflow user:javaLearner
     return daysBetween;}
 public String datetoString(LocalDate l) {
     DateTimeFormatter formatter_1 = DateTimeFormatter.ofPattern("YYYY-MM-dd");

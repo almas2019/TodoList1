@@ -17,3 +17,6 @@ created data abstractions and created tests DateFeatures and ListEntries
 
 //For Oct.5
 added Saveable and Loadable interfaces and implemented those interfaces
+
+//For Oct.12
+Created an abstract class and new dailylist class
