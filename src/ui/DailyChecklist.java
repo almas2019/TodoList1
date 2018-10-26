@@ -12,6 +12,8 @@ public class DailyChecklist extends Entries {
     private LocalDate  today = LocalDate.now();
     public void newEntry(String value)  {
         super.newEntry(value,today, "In Progress");
+        System.out.println("Item Added");
+        super.print();
     }
 public void takeoutEntries(String value) {
     for (Entry i : listentries) {
