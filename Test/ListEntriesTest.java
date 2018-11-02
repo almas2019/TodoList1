@@ -1,5 +1,3 @@
-import ui.Entries;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -7,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 //public class ListEntriesTest
 //
 //
-////private Entries ent = new RegularEntries();
+////private ListEntries ent = new RegularListEntries();
 ////private LocalDate localdate = LocalDate.now();
 ////private Entry entry =new Entry();
 ////private ArrayList<Entry> listentries = new ArrayList<>();

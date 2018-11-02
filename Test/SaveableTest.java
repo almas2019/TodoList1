@@ -12,7 +12,7 @@ import java.util.Scanner;
 ////private LocalDate localdate = LocalDate.now();
 ////@Test
 ////public void testSave() throws IOException {
-////    Entries ent = new ListEntries();
+////    ListEntries ent = new ListEntries();
 ////    ent.newEntry("fair",localdate);
 ////    ent.newEntry("fair2",localdate);
 ////    ent.save("Todo.txt");

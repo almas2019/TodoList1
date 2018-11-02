@@ -11,9 +11,9 @@ import java.time.LocalDate;
 public class LoadableTest {
     @Test
     public void testLoad() throws IOException {
-        Loadable loadable = new RegularEntries();
+        Loadable loadable = new RegularListEntries();
         loadable.load("Test.txt");
-        Entries list = (Entries) loadable; //this typecasts the loadable to ListEntries aka promotes it, talked to TA Pray about type casting
+        ListEntries list = (ListEntries) loadable; //this typecasts the loadable to ListEntries aka promotes it, talked to TA Pray about type casting
         Entry e = list.listentries.get(0);
         assertEquals(e.getName(), "fine");
         assertEquals(e.getStatus(), "Done");

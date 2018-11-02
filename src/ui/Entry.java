@@ -9,6 +9,11 @@ public class Entry {
     private long daysLeft;
     private String status;
 
+    public ListEntries getListEntries() {
+        return listEntries;
+    }
+
+    private ListEntries listEntries;
 
     public LocalDate getDueDate() {
         return dueDate;
@@ -33,12 +38,32 @@ public class Entry {
     public void setName(String name) {
         this.name = name;
     }
+
     public long getDaysLeft() {
-       return daysLeft;}
+        return daysLeft;
+    }
 
     public void setDaysLeft(long daysLeft) {
-       this.daysLeft = daysLeft;} }
+        this.daysLeft = daysLeft;
+    }
 
+
+    public void setListEntries(ListEntries e) {
+        if (!e.equals(listEntries)) {
+            if (listEntries != null) {
+                listEntries.listentries.remove(this);
+            }
+            this.listEntries = e;
+            if (e instanceof DailyChecklist) {
+                DailyChecklist dl = (DailyChecklist) e;
+                dl.newEntry(name);
+            } else {
+                RegularListEntries r = (RegularListEntries) e;
+                r.newEntry(name, dueDate);
+            }
+        }
+    }
+}
 
 
 

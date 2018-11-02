@@ -1,17 +1,12 @@
 package ui;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Scanner;
 
-public class RegularEntries extends Entries {
+public class RegularListEntries extends ListEntries {
 public void newEntry(String value, LocalDate date)  {
     super.newEntry(value,date,"Not Done");
-    super.print();
+
 }
 public void takeoutEntries(String value){
         for (Entry i : listentries) {
