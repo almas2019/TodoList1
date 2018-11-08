@@ -2,6 +2,7 @@ package ui;
 
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Entry {
     private String name;
@@ -9,11 +10,11 @@ public class Entry {
     private long daysLeft;
     private String status;
 
-    public ListEntries getListEntries() {
-        return listEntries;
+    public EntryManager getEntryManager() {
+        return entryManager;
     }
 
-    private ListEntries listEntries;
+    private EntryManager entryManager;
 
     public LocalDate getDueDate() {
         return dueDate;
@@ -48,17 +49,17 @@ public class Entry {
     }
 
 
-    public void setListEntries(ListEntries e) {
-        if (!e.equals(listEntries)) {
-            if (listEntries != null) {
-                listEntries.listentries.remove(this);
+    public void setEntryManager(EntryManager e) {
+        if (!e.equals(entryManager)) {
+            if (entryManager != null) {
+                entryManager.listentries.remove(this);
             }
-            this.listEntries = e;
+            this.entryManager = e;
             if (e instanceof DailyChecklist) {
                 DailyChecklist dl = (DailyChecklist) e;
                 dl.newEntry(name);
             } else {
-                RegularListEntries r = (RegularListEntries) e;
+                RegularEntries r = (RegularEntries) e;
                 r.newEntry(name, dueDate);
             }
         }

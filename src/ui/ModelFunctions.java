@@ -9,7 +9,7 @@ import java.time.format.DateTimeParseException;
 
 public class ModelFunctions {
     DailyChecklist dailyChecklist = new DailyChecklist();
-    RegularListEntries regularEntries = new RegularListEntries();
+    RegularEntries regularEntries = new RegularEntries();
     public Entry e = new Entry();
 
     //REQUIRES: Non empty list, date must be in format YYYY-MM-DD
@@ -18,8 +18,6 @@ public class ModelFunctions {
     public void enter(String name, String date) throws DateTimeParseException {
         LocalDate localDate = LocalDate.parse(date); //this line is referenced from mkyong.com;
         regularEntries.newEntry(name, localDate);
-
-
     }
 
 
@@ -117,16 +115,24 @@ public class ModelFunctions {
         }
         return false;
     }
-    public void moveEntry(String name) {
-        if (onDailyList(name)){
-           e.setListEntries(regularEntries);
-        }
-        if (onRegularEntries(name)){
-           e.setListEntries(dailyChecklist);
-        }
 
+    public void moveEntry(String name) {
+        if (onDailyList(name)) {
+            e.setEntryManager(regularEntries);
+                if (e.getStatus().equals("Done For Today")) {
+                    regularEntries.takeoutEntries(name);
+                }
+            }
+
+       else if (onRegularEntries(name)) {
+            e.setEntryManager(dailyChecklist);
+                if (e.getStatus().equals("Done")) {
+                    dailyChecklist.takeoutEntries(name);
+                }
+            }
+        }
     }
-}
+
 
 
 

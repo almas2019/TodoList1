@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Model
 { DailyChecklist dailyChecklist = new DailyChecklist();
-    RegularListEntries regularEntries=new RegularListEntries();
+    RegularEntries regularEntries=new RegularEntries();
         Scanner scanner = new Scanner(System.in);
         ModelFunctions mf = new ModelFunctions();
 //Requires: String input

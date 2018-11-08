@@ -11,19 +11,20 @@ public class ModelFunctionsTest {
     Entry entry;
     ModelFunctions mf;
  DailyChecklist dailyChecklist;
-    RegularListEntries regularEntries;
+    RegularEntries regularEntries;
     @BeforeEach
     public void newEntry(){
         entry = new Entry();
         mf = new ModelFunctions();
         dailyChecklist = new DailyChecklist();
-        regularEntries = new RegularListEntries();
+        regularEntries = new RegularEntries();
         }
     @Test
     public void moveListTest() throws InvalidItemException {
-    mf.enter("Hello");
+    mf.enter("Hello", "2018-02-02");
     mf.moveEntry("Hello");
-    mf.remove("A","Hello");
+    mf.moveEntry("Hello");
+    mf.remove();
     mf.sizeofList("A");
     mf.sizeofList("B");
     mf.printItems("A");
