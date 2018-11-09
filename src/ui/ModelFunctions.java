@@ -8,8 +8,8 @@ import java.time.format.DateTimeParseException;
 
 
 public class ModelFunctions {
-    DailyChecklist dailyChecklist = new DailyChecklist();
-    RegularEntries regularEntries = new RegularEntries();
+   public DailyChecklist dailyChecklist = new DailyChecklist();
+   public RegularEntries regularEntries = new RegularEntries();
     public Entry e = new Entry();
 
     //REQUIRES: Non empty list, date must be in format YYYY-MM-DD
@@ -23,42 +23,6 @@ public class ModelFunctions {
 
     public void enter(String name) {
         dailyChecklist.newEntry(name);
-    }
-
-    //REQUIRES: non empty list, task already in listofentries
-    //MODIFIES: this
-//EFFECTS: Removes the value
-    public void remove(String choice, String name) throws InvalidItemException {
-        System.out.println("What task are you done?");
-        if (choice.equals("B")) {
-            regularEntries.print();
-            for (Entry e : regularEntries.listentries) {
-                if (e.getName().equals(name)) {
-                    regularEntries.takeoutEntries(name);
-                    System.out.println("These are the tasks that are done:");
-                    regularEntries.numdone();
-                    regularEntries.printDone();
-                    return;
-                }
-            }
-            throw new InvalidItemException("To Do List Does Not Contain Item");
-        }
-
-
-        if (choice.equals("A")) {
-            dailyChecklist.print();
-            for (Entry e : dailyChecklist.listentries) {
-                if (e.getName().equals(name)) {
-                    dailyChecklist.takeoutEntries(name);
-                    System.out.println("These are the tasks that you no longer need to worry about for today");
-                    dailyChecklist.printDone();
-                    dailyChecklist.numdone();
-                    return;
-                }
-            }
-
-            throw new InvalidItemException("To Do List Does Not Contain Item");
-        }
     }
 
     //EFFECTS: prints the list of entries
@@ -81,23 +45,6 @@ public class ModelFunctions {
         }
     }
 
-    public void modelSave(String choice, String fileName) throws IOException {
-        if (choice.equals("B")) {
-            regularEntries.save(fileName + ".txt");
-        } else if (choice.equals("A")) {
-            dailyChecklist.save(fileName + ".txt");
-        }
-    }
-
-    public void modelLoad(String choice, String loadName) throws IOException {
-        if (choice.equals("B")) {
-            regularEntries.load(loadName + ".txt");
-            System.out.println("ToDo List Loaded");
-        } else if (choice.equals("A")) {
-            dailyChecklist.load(loadName + ".txt");
-            System.out.println("Daily Checklist Loaded");
-        }
-    }
 
     public boolean onDailyList(String name) {
      for (Entry e : dailyChecklist.listentries) {
@@ -119,14 +66,14 @@ public class ModelFunctions {
     public void moveEntry(String name) {
         if (onDailyList(name)) {
             e.setEntryManager(regularEntries);
-                if (e.getStatus().equals("Done For Today")) {
+                if (e.getStatus().equals(dailyChecklist.DoneStatus)) {
                     regularEntries.takeoutEntries(name);
                 }
             }
 
        else if (onRegularEntries(name)) {
             e.setEntryManager(dailyChecklist);
-                if (e.getStatus().equals("Done")) {
+                if (e.getStatus().equals(regularEntries.DoneStatus)) {
                     dailyChecklist.takeoutEntries(name);
                 }
             }

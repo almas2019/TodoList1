@@ -1,6 +1,7 @@
 import Exceptions.InvalidItemException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ui.EntryManager;
 import ui.ModelFunctions;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,12 +11,13 @@ public class InvalidItemsTest {
     @BeforeEach
     public void load() {
         mf = new ModelFunctions();
+
     }
     @Test
     public void removeInvalidItemRegularEntries() {
         mf.enter("Radio","2018-02-02");
         try {
-            mf.remove("B","Great");
+            mf.regularEntries.remove("Great");
         } catch (InvalidItemException e) {
             System.out.println("Item not There!!!!");
         }
@@ -24,15 +26,16 @@ public class InvalidItemsTest {
 public void removeValidItemRegularEntries() {
     mf.enter("Radio","2018-02-02");
     try {
-        mf.remove("B","Radio");
+        mf.regularEntries.remove("Radio");
     } catch (InvalidItemException e) {
         fail("Item not There!!!!");
     }}
+
     @Test
     public void removeInvalidItemDailyChecklist() {
         mf.enter("Radio");
         try {
-            mf.remove("A","Great");
+            mf.dailyChecklist.remove("Great");
         } catch (InvalidItemException e) {
             System.out.println("Item not There!!!!");
         }
@@ -41,7 +44,7 @@ public void removeValidItemRegularEntries() {
     public void removeValidDailyCheckList() {
         mf.enter("Radio");
         try {
-            mf.remove("A","Radio");
+            mf.dailyChecklist.remove("Radio");
         } catch (InvalidItemException e) {
             fail("Item not There!!!!");
         }

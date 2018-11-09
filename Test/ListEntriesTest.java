@@ -1,49 +1,63 @@
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import ui.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-//public class ListEntriesTest
-//
-//
-////private EntryManager ent = new RegularEntries();
-////private LocalDate localdate = LocalDate.now();
-////private Entry entry =new Entry();
-////private ArrayList<Entry> listentries = new ArrayList<>();
-////
-////@Test
-////public void testAddingoneEntry () {
-////    ent.newEntry("fun",localdate);
-////}
-////@Test
-////public void testAddingmultipleEntries() {
-////    ent.newEntry("fair",localdate);
-////    ent.newEntry("fair2",localdate);
-////}
-////@Test
-////public void testDuplicates () {
-////    ent.newEntry("fair",localdate);
-////    assertTrue(ent.checkDuplicates("fair"));
-////    assertFalse(ent.checkDuplicates("fly"));}
-////@Test
-////public void testTakeout() {
-////    Entry entry1 = new Entry();
-////    entry1.setName("fair");
-////    entry1.setStatus("Done");
-////    entry1.setDaysLeft(0);
-////    entry1.setDueDate(localdate);
-////    listentries.add(entry1);
-////    ent.newEntry("fair",localdate);
-////   ent.takeoutEntries("fair");
-////   assertEquals(listentries.get(0).getName(),ent.listentries.get(0).getName());
-////    assertEquals(listentries.get(0).getStatus(), ent.listentries.get(0).getStatus());
-////    assertEquals(ent.listentries.get(0).getDaysLeft(), 0);
-////    }
-////@Test
-////    public void testnumdone() {
-////    ent.newEntry("fair",localdate);
-////    ent.takeoutEntries("fair");
-////    ent.takeoutEntries("talk");
-////    assertEquals(1,ent.numdone());
-////}
-////}
-////
+public class ListEntriesTest{
+
+
+private RegularEntries reg;
+private DailyChecklist dailyChecklist;
+private LocalDate localdate = LocalDate.now();
+private Entry entry =new Entry();
+//private ArrayList<Entry> listentries = new ArrayList<>();
+
+        @BeforeEach
+        public void newEntry(){
+            entry = new Entry();
+            dailyChecklist = new DailyChecklist();
+            reg = new RegularEntries();
+            reg.setDoneandNotDone();
+        }
+@Test
+public void testAddingoneEntry () {
+    reg.newEntry("fun",localdate);
+}
+@Test
+public void testAddingmultipleEntries() {
+    reg.newEntry("fair",localdate);
+    reg.newEntry("fair2",localdate);
+}
+@Test
+public void testDuplicates () {
+    reg.newEntry("fair",localdate);
+    assertTrue(reg.checkDuplicates("fair"));
+    assertFalse(reg.checkDuplicates("fly"));}
+@Test
+public void testTakeout() {
+    Entry entry1 = new Entry();
+    entry1.setName("fair");
+    entry1.setStatus("Done");
+    entry1.setDaysLeft(0);
+    entry1.setDueDate(localdate);
+    reg.addEntry(entry1);
+   reg.takeoutEntries("fair");
+   assertEquals(reg.listentries.get(0).getName(), reg.listentries.get(0).getName());
+    assertEquals(reg.listentries.get(0).getStatus(), reg.listentries.get(0).getStatus());
+    assertEquals(reg.listentries.get(0).getDaysLeft(), 0);
+    }
+@Test
+    public void testnumdone() {
+    reg.newEntry("fair",localdate);
+    reg.takeoutEntries("fair");
+    reg.takeoutEntries("talk");
+    assertEquals(1,reg.numdone(reg.DoneStatus));
+}
+}
+
