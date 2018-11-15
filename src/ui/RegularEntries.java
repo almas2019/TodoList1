@@ -11,7 +11,7 @@ public class RegularEntries extends EntryManager {
     public RegularEntries(){
         addObserver(new StatusTracker());
     }
-    private String ListName = "Regular ToDO List";
+    private String ListName = "Regular ToDo List";
     public void newEntry(String value, LocalDate date) {
         setDoneandNotDone();
         super.newEntry(value, date);

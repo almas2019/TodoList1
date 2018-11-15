@@ -1,6 +1,8 @@
 package Model;
 
 import Exceptions.InvalidItemException;
+import WebsiteParser.InspirationalQuotes;
+import org.json.JSONException;
 import ui.EntryManager;
 import ui.FileManager;
 
@@ -19,12 +21,12 @@ public class Model {
     //Requires: String input
 //Modifies: this, listSize, numdone
 //Effects: Using user input creates new entries and changes entries in the list
-    public Model() throws IOException {
+    public Model() throws IOException, JSONException {
         String option;
         String choice;
 
         while (true) {
-            System.out.println("Please select a list: [A] Daily Health Checklist [B]Normal ToDo");
+            System.out.println("Please select an option: [A] Daily Health Checklist [B]Normal ToDo List [C]Inspirational Quote");
             choice = scanner.nextLine();
             if (choice.equals("A")) {
                 System.out.println("Welcome to Your Daily Checklist");
@@ -33,6 +35,10 @@ public class Model {
             if (choice.equals("B")) {
                 System.out.println("Welcome to Your Todo List");
                 em = mf.regularEntries;
+            }
+            if (choice.equals("C")){
+                InspirationalQuotes quote = new InspirationalQuotes();
+                quote.inspiration();
             }
             System.out.println("Please select an option: [1] Add an item  [2] Cross off an item [3] Show all items [4]Save List [5]Load List [6]Move an Item to Another List [6] Quit");
             option = scanner.nextLine();
