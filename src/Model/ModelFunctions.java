@@ -1,13 +1,17 @@
-package ui;
+package Model;
 
 import Exceptions.InvalidItemException;
+import ui.DailyChecklist;
+import ui.Entry;
+import ui.RegularEntries;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 
-public class ModelFunctions {
+
+public class ModelFunctions{
    public DailyChecklist dailyChecklist = new DailyChecklist();
    public RegularEntries regularEntries = new RegularEntries();
     public Entry e = new Entry();

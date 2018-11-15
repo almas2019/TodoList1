@@ -1,6 +1,8 @@
-package ui;
+package Model;
 
 import Exceptions.InvalidItemException;
+import ui.EntryManager;
+import ui.FileManager;
 
 import java.io.IOException;
 import java.time.format.DateTimeParseException;

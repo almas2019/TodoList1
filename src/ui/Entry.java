@@ -57,15 +57,7 @@ public class Entry {
             this.entryManager = e;}
            e.addEntry(this);}
     }
-//            if (e instanceof DailyChecklist) {
-//                DailyChecklist dl = (DailyChecklist) e;
-//                dl.newEntry(name); // create new method that takes in object and not string
-//            } else {
-//                RegularEntries r = (RegularEntries) e;
-//                r.newEntry(name, dueDate);
-//            }
-//        }
-//    }
+
 
 
 

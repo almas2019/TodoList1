@@ -1,8 +1,7 @@
 import Exceptions.InvalidItemException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ui.EntryManager;
-import ui.ModelFunctions;
+import Model.ModelFunctions;
 
 import static org.junit.jupiter.api.Assertions.*;
 

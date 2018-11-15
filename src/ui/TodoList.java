@@ -1,6 +1,8 @@
 package ui; //name of package//
 
 
+import Model.Model;
+
 import java.io.IOException;
 
 public class TodoList {

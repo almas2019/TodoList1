@@ -1,5 +1,7 @@
 package ui;
 
+import Model.ModelFunctions;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
