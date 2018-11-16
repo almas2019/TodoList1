@@ -1,4 +1,8 @@
 package Exceptions;
 
-public class InvalidListException {
+public class InvalidListException extends Exception {
+    public InvalidListException(String msg) {
+        super(msg);
+    }
 }
+

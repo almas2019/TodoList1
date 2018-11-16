@@ -1,6 +1,7 @@
 package Model;
 
 import Exceptions.InvalidItemException;
+import Exceptions.InvalidListException;
 import ui.DailyChecklist;
 import ui.Entry;
 import ui.RegularEntries;
@@ -82,7 +83,8 @@ public class ModelFunctions{
                 }
             }
         }
-    }
+        }
+
 
 
 

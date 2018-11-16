@@ -1,6 +1,7 @@
 package Model;
 
 import Exceptions.InvalidItemException;
+import Exceptions.InvalidListException;
 import WebsiteParser.InspirationalQuotes;
 import org.json.JSONException;
 import ui.EntryManager;
@@ -26,21 +27,32 @@ public class Model {
         String choice;
 
         while (true) {
-            System.out.println("Please select an option: [A] Daily Health Checklist [B]Normal ToDo List [C]Inspirational Quote");
-            choice = scanner.nextLine();
-            if (choice.equals("A")) {
-                System.out.println("Welcome to Your Daily Checklist");
-               em = mf.dailyChecklist;
+            System.out.println("Please select an option: [A] Daily Checklist [B]Normal ToDo List [C]Inspirational Quote");
+
+                try {
+                    choice = scanner.nextLine();
+
+                    if (choice.equals("A")) {
+                        System.out.println("Welcome to Your Daily Checklist");
+                        em = mf.dailyChecklist;
+                    } else if (choice.equals("B")) {
+                        System.out.println("Welcome to Your Todo List");
+                        em = mf.regularEntries;
+                    } else if (choice.equals("C")) {
+                        InspirationalQuotes quote = new InspirationalQuotes();
+                        quote.inspiration();
+                        throw new InvalidListException("Now onto the Lists!");
+
+                    } else if (!(choice.equals("A")) || !(choice.equals("B"))) {
+                        throw new InvalidListException("This is not a valid list choice");
+                    }
+                }
+            catch (InvalidListException i) {
+                System.out.println(i.getMessage());
+                continue;
             }
-            if (choice.equals("B")) {
-                System.out.println("Welcome to Your Todo List");
-                em = mf.regularEntries;
-            }
-            if (choice.equals("C")){
-                InspirationalQuotes quote = new InspirationalQuotes();
-                quote.inspiration();
-            }
-            System.out.println("Please select an option: [1] Add an item  [2] Cross off an item [3] Show all items [4]Save List [5]Load List [6]Move an Item to Another List [6] Quit");
+
+            System.out.println("Please select an option: [1] Add an item  [2] Cross off an item [3] Show all items [4]Save List [5]Load List [6]Move an Item to Another List [7] Quit");
             option = scanner.nextLine();
             System.out.println("you selected: " + option);
             if (option.equals("1")) {
