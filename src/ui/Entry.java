@@ -9,12 +9,11 @@ public class Entry {
     private LocalDate dueDate;
     private long daysLeft;
     private String status;
+    private EntryManager entryManager;
 
     public EntryManager getEntryManager() {
         return entryManager;
     }
-
-    private EntryManager entryManager;
 
     public LocalDate getDueDate() {
         return dueDate;

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="468.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.Controller">
+   <children>
+      <MenuBar prefHeight="29.0" prefWidth="615.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Text fontSmoothingType="LCD" layoutX="3.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to the ToDO List!" textAlignment="CENTER" wrappingWidth="608.2060546875" />
+      <Button fx:id="enter" layoutX="365.0" layoutY="177.0" mnemonicParsing="false" text="Enter" />
+      <TextField fx:id="field" layoutX="198.0" layoutY="177.0" />
+      <ScrollPane layoutX="-3.0" layoutY="294.0">
+         <content>
+            <TextArea fx:id="dialog" editable="false" prefHeight="172.0" prefWidth="615.0" />
+         </content>
+      </ScrollPane>
+      <MenuButton layoutX="233.0" layoutY="83.0" mnemonicParsing="false" text="Choose an Option">
+        <items>
+          <MenuItem fx:id="reg" mnemonicParsing="false" onAction="#chooseRegList" text="Regular To Do List" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </MenuButton>
+   </children>
+</AnchorPane>
