@@ -27,6 +27,7 @@ public abstract class EntryManager extends Observable {
 
     protected void newEntry(String value, LocalDate date) {
         if (!(checkDuplicates(value))) {
+            Entry entry = new Entry();
             listentries.add(entry);
             entry.setName(value);
             entry.setStatus(NotDoneStatus);
@@ -38,7 +39,6 @@ public abstract class EntryManager extends Observable {
     }
 
     public void remove(String name) throws InvalidItemException {
-        setDoneandNotDone();
         System.out.println("What task are you done?");
         print();
         for (Entry e : listentries) {

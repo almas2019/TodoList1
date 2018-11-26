@@ -1,6 +1,7 @@
 package gui;
 
 import Model.ModelFunctions;
+import WebsiteParser.InspirationalQuotes;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -8,12 +9,15 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.json.JSONException;
 import ui.EntryManager;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Controller {
     public Controller() {
@@ -31,7 +35,10 @@ public class Controller {
     public MenuItem remove = new MenuItem();
     public MenuItem seeAll = new MenuItem();
     public MenuButton editListsButton = new MenuButton();
-    public String text = "";
+    private String text = "";
+    private InspirationalQuotes iq = new InspirationalQuotes();
+    public DatePicker dp = new DatePicker();
+    private LocalDate localDate;
 
     ModelFunctions mf = new ModelFunctions();
     //        public void enterPressed(ActionEvent e) {
@@ -71,7 +78,9 @@ public void showAllItems(){
 //            }).start());
 //}
 
-
+public void addInspiration() throws IOException, JSONException {
+        iq.inspiration();
+}
 
     public void chooseDailyList() {
         chooseList(mf.dailyChecklist.getListName(), mf.dailyChecklist);
@@ -91,38 +100,45 @@ this.text = t;
 
 
 public void addtoDailyList() {
-//        enter.setOnAction((ActionEvent event) ->
-//    mf.enter(field.getText()));}
-
-//    enter.setOnAction((ActionEvent event) ->
-//            new Thread(() -> {
-//                mf.dailyChecklist.newEntry(field.getText());
-//                System.out.println("Item Added");
-//                System.out.println(mf.dailyChecklist.listentries);
-//            }).start());
-}
-//public void
-    public void addItems() {
-        System.out.println("Please enter the name of the item");
-        textBoxVisible();
-        if (em.getListName().equals(DAILY_CHECKLIST_NAME)) {
-//            addtoDailyList();
-            editListsButton.setVisible(false);
-            enter.setOnAction((ActionEvent event) -> {
+    editListsButton.setVisible(false);
+    enter.setOnAction((ActionEvent event) -> {
                 System.out.println("Item Added");
-                String l = "";
+                String l;
                 l = field.getText();
                 mf.dailyChecklist.newEntry(l);
                 textBoxInVisible();
                 field.clear();
                 listOption.setVisible(true);
-
-               });
-        }
-//                        mf.dailyChecklist.newEntry(field.getText());
+});
+}
+    public void addtoRegularEntries() {
+        editListsButton.setVisible(false);
+        enter.setOnAction((ActionEvent event) -> {
+            System.out.println("Now Please Select the Date it's due");
+            setText(field.getText());
+            textBoxInVisible();
+            dp.setVisible(true);
+            field.clear();
+        });
+        dp.setOnAction((ActionEvent e) -> {
+            localDate = dp.getValue();
+            mf.regularEntries.newEntry(text, localDate);
+            dp.setValue(null);
+            listOption.setVisible(true);
+            dp.setVisible(false);
+        });
+    }
+//public void
+    public void addItems() {
+        System.out.println("Please enter the name of the item");
+        textBoxVisible();
+        if (em.getListName().equals(DAILY_CHECKLIST_NAME)) {
+           addtoDailyList();
+               }
 
         else if (em.getListName().equals(REGULAR_LIST_NAME)) {
-
+            addtoRegularEntries();
+            System.out.println("Item Added");
         }
 
 
