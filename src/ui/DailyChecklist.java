@@ -11,24 +11,23 @@ import java.time.LocalDate;
 public class DailyChecklist extends EntryManager {
 public DailyChecklist(){
     addObserver(new StatusTracker());
+    setListName("Daily CheckList");
+    setDoneandNotDone();
 }
     private DateFeatures df = new DateFeatures();
-private String ListName = "Daily Checklist";
+
    public void setDoneandNotDone() {
    this.DoneStatus= "Done for Today";
    this.NotDoneStatus = "In Progress";}
 
 
     public void newEntry(String value)  {
-       setDoneandNotDone();
         super.newEntry(value,df.today);
     }
 
     public void takeoutEntries(String value) {
-       setDoneandNotDone();
-       entry.setStatus(DoneStatus);
        setChanged();
-       StatusUpdater statusUpdater = new StatusUpdater(ListName, entry.getName(),df.today);
+       StatusUpdater statusUpdater = new StatusUpdater(listName, entry.getName(),entry.getDateDone());
        notifyObservers(statusUpdater);
             entry.setDaysLeft(1);
             LocalDate tomorrow = df.today.plusDays(1);

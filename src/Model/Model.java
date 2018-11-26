@@ -18,7 +18,8 @@ public class Model {
     ModelFunctions mf = new ModelFunctions();
     FileManager fileManager= new FileManager();
     EntryManager em;
-
+private String DAILY_CHECKLIST = "Daily CheckList";
+private String REGULAR_LIST = "Regular ToDo List";
     //Requires: String input
 //Modifies: this, listSize, numdone
 //Effects: Using user input creates new entries and changes entries in the list
@@ -105,6 +106,7 @@ public class Model {
                 System.out.println("This application will now shut down");
                 break;
             }
+
         }
     }
 }

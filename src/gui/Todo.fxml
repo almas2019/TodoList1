@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="468.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.Controller">
+<AnchorPane prefHeight="468.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
    <children>
       <MenuBar prefHeight="29.0" prefWidth="615.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -33,18 +33,27 @@
         </menus>
       </MenuBar>
       <Text fontSmoothingType="LCD" layoutX="3.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to the ToDO List!" textAlignment="CENTER" wrappingWidth="608.2060546875" />
-      <Button fx:id="enter" layoutX="365.0" layoutY="177.0" mnemonicParsing="false" text="Enter" />
-      <TextField fx:id="field" layoutX="198.0" layoutY="177.0" />
+      <Button fx:id="enter" layoutX="365.0" layoutY="177.0" mnemonicParsing="false" text="Enter" visible="false" />
+      <TextField fx:id="field" layoutX="198.0" layoutY="177.0" visible="false" />
       <ScrollPane layoutX="-3.0" layoutY="294.0">
          <content>
             <TextArea fx:id="dialog" editable="false" prefHeight="172.0" prefWidth="615.0" />
          </content>
       </ScrollPane>
-      <MenuButton layoutX="233.0" layoutY="83.0" mnemonicParsing="false" text="Choose an Option">
+      <MenuButton fx:id="listOption" layoutX="233.0" layoutY="83.0" mnemonicParsing="false" text="Choose an Option">
         <items>
           <MenuItem fx:id="reg" mnemonicParsing="false" onAction="#chooseRegList" text="Regular To Do List" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
+            <MenuItem fx:id="daily" mnemonicParsing="false" onAction="#chooseDailyList" text="Daily Checklist" />
+          <MenuItem fx:id="quote" mnemonicParsing="false" text="Inspirational Quote" />
         </items>
+      </MenuButton>
+      <MenuButton fx:id="editListsButton" layoutX="234.0" layoutY="133.0" mnemonicParsing="false" text="Choose an Option" visible="false">
+         <items>
+            <MenuItem fx:id="add" mnemonicParsing="false" onAction="#addItems" text="Add an Item" />
+            <MenuItem mnemonicParsing="false" text="Remove an Item" />
+            <MenuItem mnemonicParsing="false" text="Move an Item" />
+            <MenuItem fx:id="seeAll" mnemonicParsing="false" onAction="#showAllItems" text="Show all Items" />
+         </items>
       </MenuButton>
    </children>
 </AnchorPane>

@@ -9,9 +9,9 @@ import java.time.LocalDate;
 public class RegularEntries extends EntryManager {
     DateFeatures df = new DateFeatures();
     public RegularEntries(){
+        setListName("Regular ToDo List");
         addObserver(new StatusTracker());
     }
-    private String ListName = "Regular ToDo List";
     public void newEntry(String value, LocalDate date) {
         setDoneandNotDone();
         super.newEntry(value, date);
@@ -26,7 +26,7 @@ public class RegularEntries extends EntryManager {
         setDoneandNotDone();
         entry.setStatus(DoneStatus);
         setChanged();
-        StatusUpdater statusUpdater = new StatusUpdater(ListName, entry.getName(),df.today);
+        StatusUpdater statusUpdater = new StatusUpdater(listName, entry.getName(),entry.getDateDone());
         notifyObservers(statusUpdater);
         entry.setDaysLeft(0);
         System.out.println("Entry Marked as Done!");

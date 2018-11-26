@@ -2,11 +2,11 @@ package ui;
 
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class Entry {
     private String name;
     private LocalDate dueDate;
+    private LocalDate dateDone;
     private long daysLeft;
     private String status;
     private EntryManager entryManager;
@@ -45,6 +45,13 @@ public class Entry {
 
     public void setDaysLeft(long daysLeft) {
         this.daysLeft = daysLeft;
+    }
+    public LocalDate getDateDone() {
+        return dateDone;
+    }
+
+    public void setDateDone(LocalDate dateDone) {
+        this.dateDone = dateDone;
     }
 
 

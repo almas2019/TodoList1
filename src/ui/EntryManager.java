@@ -9,15 +9,24 @@ public abstract class EntryManager extends Observable {
     Entry entry = new Entry();
     public String DoneStatus;
     public String NotDoneStatus;
+    DateFeatures date1 = new DateFeatures();
+    protected String listName;
+
+    public String getListName() {
+        return listName;
+    }
+
+    public void setListName(String listName) {
+        this.listName = listName;
+    }
+
     public void setDoneandNotDone() {
         DoneStatus="";
         NotDoneStatus="";
     }
 
     protected void newEntry(String value, LocalDate date) {
-        setDoneandNotDone();
         if (!(checkDuplicates(value))) {
-            DateFeatures date1 = new DateFeatures();
             listentries.add(entry);
             entry.setName(value);
             entry.setStatus(NotDoneStatus);
@@ -37,6 +46,7 @@ public abstract class EntryManager extends Observable {
                 takeoutEntries(name);
                 System.out.println("These are the tasks that are done:");
                 numdone(DoneStatus);
+                e.setDateDone(date1.today);
                 printDone();
                 return;
             }
@@ -52,6 +62,20 @@ public abstract class EntryManager extends Observable {
             else return false;
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EntryManager that = (EntryManager) o;
+        return Objects.equals(listName, that.listName);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(listName);
     }
 
     //REQUIRES: Non empty list
@@ -91,6 +115,7 @@ public abstract class EntryManager extends Observable {
                 System.out.println("Name of Task:" + entry.getName());
                 System.out.println("Status:" + entry.getStatus());
                 System.out.println("Due Date:" + entry.getDueDate());
+                System.out.println("Date Updated" + entry.getDateDone());
                 System.out.println("Days Left To do Tasks:" + entry.getDaysLeft());
             }
         }
