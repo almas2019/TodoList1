@@ -62,13 +62,16 @@ public void getFieldText() {
     }).start());
 }
 public void showAllItems(){
+    Platform.runLater(() ->{
         if (em.getListName().equals(DAILY_CHECKLIST_NAME)){
             mf.dailyChecklist.print();
     }
     if (em.getListName().equals(REGULAR_LIST_NAME)) {
             mf.regularEntries.print();
     }
+} );
 }
+
 
 //public void getFieldText() {
 //    enter.setOnAction((ActionEvent event) ->
@@ -101,33 +104,40 @@ this.text = t;
 
 public void addtoDailyList() {
     editListsButton.setVisible(false);
-    enter.setOnAction((ActionEvent event) -> {
-                System.out.println("Item Added");
-                String l;
-                l = field.getText();
-                mf.dailyChecklist.newEntry(l);
-                textBoxInVisible();
-                field.clear();
-                listOption.setVisible(true);
-});
+    Platform.runLater(() -> enter.setOnAction((ActionEvent event) -> {
+        System.out.println("Item Added");
+        String l;
+        l = field.getText();
+        mf.dailyChecklist.newEntry(l);
+        textBoxInVisible();
+        field.clear();
+        listOption.setVisible(true);
+
+    }));
 }
     public void addtoRegularEntries() {
         editListsButton.setVisible(false);
-        enter.setOnAction((ActionEvent event) -> {
-            System.out.println("Now Please Select the Date it's due");
-            setText(field.getText());
-            textBoxInVisible();
-            dp.setVisible(true);
-            field.clear();
-        });
-        dp.setOnAction((ActionEvent e) -> {
-            localDate = dp.getValue();
-            mf.regularEntries.newEntry(text, localDate);
-            dp.setValue(null);
-            listOption.setVisible(true);
-            dp.setVisible(false);
-        });
+        Platform.runLater(() -> {
+            enter.setOnAction((ActionEvent event) -> {
+
+                    System.out.println("Now Please Select the Date it's due");
+                    setText(field.getText());
+                    textBoxInVisible();
+                    dp.setVisible(true);
+                    field.clear();
+                    dp.setOnAction((ActionEvent e) -> {
+                                localDate = dp.getValue();
+                                mf.regularEntries.newEntry(text, localDate);
+                                listOption.setVisible(true);
+                                dp.setVisible(false);
+                            });
+                    });
+                });
+
     }
+
+
+
 //public void
     public void addItems() {
         System.out.println("Please enter the name of the item");
@@ -213,3 +223,4 @@ public void addtoDailyList() {
         System.setErr(new PrintStream(out, true));
     }
 }
+
