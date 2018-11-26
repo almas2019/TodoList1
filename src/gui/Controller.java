@@ -130,6 +130,7 @@ public void addtoDailyList() {
                                 mf.regularEntries.newEntry(text, localDate);
                                 listOption.setVisible(true);
                                 dp.setVisible(false);
+                        System.out.println("Item Added");
                             });
                     });
                 });
@@ -148,7 +149,6 @@ public void addtoDailyList() {
 
         else if (em.getListName().equals(REGULAR_LIST_NAME)) {
             addtoRegularEntries();
-            System.out.println("Item Added");
         }
 
 
