@@ -1,12 +1,10 @@
 package Model;
 
 import Exceptions.InvalidItemException;
-import Exceptions.InvalidListException;
 import ui.DailyChecklist;
 import ui.Entry;
 import ui.RegularEntries;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -68,18 +66,18 @@ public class ModelFunctions{
         return false;
     }
 
-    public void moveEntry(String name) {
+    public void moveEntry(String name) throws InvalidItemException {
         if (onDailyList(name)) {
             e.setEntryManager(regularEntries);
                 if (e.getStatus().equals(dailyChecklist.DoneStatus)) {
-                    regularEntries.takeoutEntries(name);
+                    regularEntries.checkOffRL(name);
                 }
             }
 
        else if (onRegularEntries(name)) {
             e.setEntryManager(dailyChecklist);
                 if (e.getStatus().equals(regularEntries.DoneStatus)) {
-                    dailyChecklist.takeoutEntries(name);
+                    dailyChecklist.checkOffDL(name);
                 }
             }
         }

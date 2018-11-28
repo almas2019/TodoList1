@@ -37,6 +37,7 @@
       <Button fx:id="enter" layoutX="365.0" layoutY="177.0" mnemonicParsing="false" text="Enter" visible="false" />
       <TextField fx:id="field" layoutX="198.0" layoutY="177.0" visible="false" />
       <DatePicker fx:id="dp" layoutX="185.0" layoutY="221.0" promptText="Select a date" visible="false" />
+      <Button fx:id="enter2" layoutX="391.0" layoutY="221.0" mnemonicParsing="false" text="Enter" visible="false" />
       <ScrollPane layoutX="-3.0" layoutY="294.0">
          <content>
             <TextArea fx:id="dialog" editable="false" prefHeight="172.0" prefWidth="615.0" />
@@ -52,7 +53,7 @@
       <MenuButton fx:id="editListsButton" layoutX="234.0" layoutY="133.0" mnemonicParsing="false" text="Choose an Option" visible="false">
          <items>
             <MenuItem fx:id="add" mnemonicParsing="false" onAction="#addItems" text="Add an Item" />
-            <MenuItem mnemonicParsing="false" text="Remove an Item" />
+            <MenuItem fx:id="remove" mnemonicParsing="false" onAction="#removeItems" text="Remove an Item" />
             <MenuItem mnemonicParsing="false" text="Move an Item" />
             <MenuItem fx:id="seeAll" mnemonicParsing="false" onAction="#showAllItems" text="Show all Items" />
          </items>

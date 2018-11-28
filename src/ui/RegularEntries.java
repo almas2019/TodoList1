@@ -1,15 +1,17 @@
 package ui;
 
 
-import Model.StatusUpdater;
+import Exceptions.InvalidItemException;
 import Observer.StatusTracker;
 
 import java.time.LocalDate;
 
 public class RegularEntries extends EntryManager {
-    DateFeatures df = new DateFeatures();
+    private String REGULAR_LIST_NAME ="Regular ToDo List";
+
+
     public RegularEntries(){
-        setListName("Regular ToDo List");
+        setListName(REGULAR_LIST_NAME);
         addObserver(new StatusTracker());
     }
     public void newEntry(String value, LocalDate date) {
@@ -17,19 +19,12 @@ public class RegularEntries extends EntryManager {
         super.newEntry(value, date);
 
     }
-
     public void setDoneandNotDone() {
         this.DoneStatus= "Done";
         this.NotDoneStatus = "Not Done";}
 
-    public void takeoutEntries(String value) {
-        setDoneandNotDone();
-        entry.setStatus(DoneStatus);
-        setChanged();
-        StatusUpdater statusUpdater = new StatusUpdater(listName, entry.getName(),entry.getDateDone());
-        notifyObservers(statusUpdater);
-        entry.setDaysLeft(0);
-        System.out.println("Entry Marked as Done!");
-        entry.setEntryManager(this);
+    public void checkOffRL(String value) throws InvalidItemException {
+        super.checkOffEntries(value,0,entry.getDueDate());
     }
+
 }

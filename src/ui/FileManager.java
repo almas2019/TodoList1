@@ -14,17 +14,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FileManager extends ModelFunctions implements Saveable, Loadable {
-    public void modelSave(String choice, String fileName) throws IOException, JSONException {
-        if (choice.equals("B")) {
-         save(fileName + ".txt");
-        } else if (choice.equals("A")) {
-            save(fileName + ".txt");
+public class FileManager implements Saveable, Loadable {
+    public void modelSave(String choice, String fileName, EntryManager em) throws IOException, JSONException {
+        if (choice.equals("A")) {
+         save(fileName + ".txt", em);
+        } else if (choice.equals("B")) {
+            save(fileName + ".txt",em);
         }
     }
-    public void save(String s) {
-
-    }
+//    public void save(String s) {
+//
+//    }
 
     public void modelLoad(String choice, String loadName) throws IOException {
         if (choice.equals("B")) {
@@ -37,21 +37,22 @@ public class FileManager extends ModelFunctions implements Saveable, Loadable {
     }
     //code reference for save from FileReaderWriter file from 210 repository
     public void save(String s,EntryManager em) throws IOException, JSONException {
-        JSONArray list = new JSONArray();
+        JSONArray array = new JSONArray();
+        array.put(em.listName);
         for (Entry e:em.listentries){
             JSONObject obj = new JSONObject();
             obj.put("Entry Name",e.getName());
             obj.put("Status",e.getStatus());
             obj.put("Due Date", e.getDueDate());
             obj.put("Date Done", e.getDateDone());
-            obj.put("Type of Entry Manager", e.getEntryManager());
-            list.put(obj);
+//            obj.put("Type of Entry Manager", e.getEntryManager());
+            array.put(obj);
         }
         PrintWriter writer = new PrintWriter(s, "UTF-8");
-       writer.println (list.toString());
-        for (Entry e : e.getEntryManager().listentries) {
-            writer.println(e.getName() + "," + e.getStatus() + "," + e.getDueDate() + ",");
-        }
+       writer.println (array.toString());
+//        for (Entry e :em.listentries {
+//            writer.println(e.getName() + "," + e.getStatus() + "," + e.getDueDate() + ",");
+//        }
         writer.close();
     }
 

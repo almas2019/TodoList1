@@ -1,6 +1,7 @@
 package ui; //name of package//
 
 
+import Exceptions.InvalidItemException;
 import Model.Model;
 import WebsiteParser.InspirationalQuotes;
 import org.json.JSONException;

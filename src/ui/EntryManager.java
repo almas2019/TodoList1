@@ -1,6 +1,8 @@
 package ui;
 
 import Exceptions.InvalidItemException;
+import Model.StatusUpdater;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -33,55 +35,52 @@ public abstract class EntryManager extends Observable {
             entry.setStatus(NotDoneStatus);
             entry.setDueDate(date);
             entry.setDaysLeft(date1.getDayCount(entry.getDueDate()));
+            this.entry =entry;
             entry.setEntryManager(this);
 
         }
     }
-
-    public void remove(String name) throws InvalidItemException {
-        System.out.println("What task are you done?");
-        print();
-        for (Entry e : listentries) {
-            if (e.getName().equals(name)) {
-                takeoutEntries(name);
-                System.out.println("These are the tasks that are done:");
-                numdone(DoneStatus);
-                e.setDateDone(date1.today);
-                printDone();
-                return;
-            }
-        }
-        throw new InvalidItemException("To Do List Does Not Contain Item");
+public void whatDone(){
+    System.out.println("What task are you done?");
+    print();
+}
+    public void checkOffEntries(String name, long daysLeft, LocalDate dateDue) throws InvalidItemException{
+     for (Entry i : listentries) {
+        if (i.getName().equals(name)) {
+            i.setStatus(DoneStatus);
+            i.setDateDone(date1.today);
+            setChanged();
+            StatusUpdater statusUpdater = new StatusUpdater(getListName(), i.getName(),i.getDateDone());
+            notifyObservers(statusUpdater);
+            i.setDaysLeft(daysLeft);
+            i.setDueDate(dateDue);
+            i.setEntryManager(this);
+            return; }
+        throw new InvalidItemException("To Do List Does Not Contain Item");}}
+    public void taskDonePrint(){
+        System.out.println("These are the tasks that are done:");
+        numdone(DoneStatus);
+        printDone();
     }
-
     //Effects: returns true if the item is already in the list
     public boolean checkDuplicates(String value) {
         for (Entry i : listentries) {
             if (i.getName().equals(value))
                 return true;
-            else return false;
         }
         return false;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EntryManager that = (EntryManager) o;
-        return Objects.equals(listName, that.listName);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(listName);
     }
 
     //REQUIRES: Non empty list
     //Modifies: this
     //Effects: changes a user specified entry to done
-    public abstract void takeoutEntries(String value);
+//    public  void checkOffRL(String value) throws InvalidItemException {
+//        System.out.println("What task are you done?");
+//        print();
+//        System.out.println("These are the tasks that are done:");
+//        numdone(DoneStatus);
+//        printDone();
+//    }
 
     //Requires: Non empty list
     // Effects: returns the size of the list of entries that are done
@@ -120,6 +119,8 @@ public abstract class EntryManager extends Observable {
             }
         }
     }
+
+
 
     public void addEntry(Entry e) {
         if (!(listentries.contains(e))) {

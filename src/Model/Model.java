@@ -12,14 +12,13 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Model {
-//    DailyChecklist dailyChecklist = new DailyChecklist();
-//    RegularEntries regularEntries = new RegularEntries();
+
     Scanner scanner = new Scanner(System.in);
     ModelFunctions mf = new ModelFunctions();
     FileManager fileManager= new FileManager();
     EntryManager em;
-private String DAILY_CHECKLIST = "Daily CheckList";
-private String REGULAR_LIST = "Regular ToDo List";
+private String DAILY_CHECKLIST = mf.dailyChecklist.getListName();
+private String REGULAR_LIST = mf.regularEntries.getListName();
     //Requires: String input
 //Modifies: this, listSize, numdone
 //Effects: Using user input creates new entries and changes entries in the list
@@ -71,16 +70,19 @@ private String REGULAR_LIST = "Regular ToDo List";
         }
 
         else if (option.equals("2")) {
-                try {
-                    System.out.println("What task are you done?");
-                    em.print();
+               try {
+                   em.whatDone();
                     String checkoff = scanner.nextLine();
-                    em.remove(checkoff);
+                    if (em.getListName().equals(DAILY_CHECKLIST)){
+                    mf.dailyChecklist.checkOffDL(checkoff);}
+                    if(em.getListName().equals(REGULAR_LIST)){
+                        mf.regularEntries.checkOffRL(checkoff);
+                    }
+                    em.taskDonePrint();
 
-                } catch (InvalidItemException e) {
+               } catch (InvalidItemException e) {
                     System.out.println(e.getMessage());
-
-                } finally {
+              } finally {
                     System.out.println("Please be careful when checking off items!");
                 }
             } else if (option.equals("3")) {
@@ -89,7 +91,8 @@ private String REGULAR_LIST = "Regular ToDo List";
             } else if (option.equals("4")) {
                 System.out.println("Please write the name of the file you would like to save");
                 String fileName = scanner.nextLine();
-                fileManager.modelSave(choice, fileName);
+                fileManager.modelSave(choice, fileName,em);
+
             } else if (option.equals("5")) {
                 System.out.println("Please write the name of the file you would like to load");
                 String loadName = scanner.nextLine();
@@ -101,8 +104,12 @@ private String REGULAR_LIST = "Regular ToDo List";
                 System.out.println("Items on Regular ToDo List");
                 mf.regularEntries.print();
                 String name = scanner.nextLine();
-                mf.moveEntry(name);
-            } else if (option.equals("7") || option.equals("quit")) {
+                    try {
+                        mf.moveEntry(name);
+                    } catch (InvalidItemException e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else if (option.equals("7") || option.equals("quit")) {
                 System.out.println("This application will now shut down");
                 break;
             }

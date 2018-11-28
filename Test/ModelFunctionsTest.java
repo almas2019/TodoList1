@@ -24,7 +24,7 @@ public class ModelFunctionsTest {
     public void moveListTest() throws InvalidItemException {
     mf.enter("Hello", "2018-02-02");
     mf.moveEntry("Hello");
-    mf.dailyChecklist.remove("Hello");
+    mf.dailyChecklist.checkOffDL("Hello");
    mf.moveEntry("Hello");
     mf.sizeofList("A");
     mf.sizeofList("B");
