@@ -144,7 +144,7 @@ private void addtoDailyList() {
             editListsButton.setVisible(false);
         });
     }
-    
+
     private void chooseList(String name, EntryManager manager) {
         redirectSystemStreams();
         System.out.println("Welcome to the" + " "+ name);
