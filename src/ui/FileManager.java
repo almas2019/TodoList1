@@ -4,43 +4,18 @@ import Model.ModelFunctions;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 
 public class FileManager implements Saveable, Loadable {
     private String DAILY_CHECKLIST_NAME = "Daily CheckList";
     private String REGULAR_LIST_NAME = "Regular ToDo List";
+    private DateFeatures df = new DateFeatures();
 
-    public void modelSave(String choice, String fileName, EntryManager em) throws IOException, JSONException {
-        if (choice.equals("A")) {
-            save(fileName + ".txt", em);
-        } else if (choice.equals("B")) {
-            save(fileName + ".txt", em);
-        }
-    }
-//    public void save(String s) {
-//
-//    }
 
-    public void modelLoad(String choice, String loadName, EntryManager em) throws IOException, JSONException, ParseException {
-        if (choice.equals("B")) {
-            load(loadName + ".txt", em);
-            System.out.println("ToDo List Loaded");
-        } else if (choice.equals("A")) {
-            load(loadName + ".txt", em);
-            System.out.println("Daily Checklist Loaded");
-        }
-    }
-
-    //code reference for save from FileReaderWriter file from 210 repository
+    //code reference for save from Crunchify JSON writer tutorial and PrintWriter 210 Repository
     public void save(String s, EntryManager em) throws IOException, JSONException {
         JSONArray array = new JSONArray();
         array.put(em.listName);
@@ -50,42 +25,89 @@ public class FileManager implements Saveable, Loadable {
             obj.put("Status", e.getStatus());
             obj.put("Due Date", e.getDueDate());
             obj.put("Date Done", e.getDateDone());
-//            obj.put("Type of Entry Manager", e.getEntryManager());
             array.put(obj);
         }
-        PrintWriter writer = new PrintWriter(s, "UTF-8");
+        PrintWriter writer = new PrintWriter(s+".json", "UTF-8");
         writer.println(array.toString());
-//        for (Entry e :em.listentries {
-//            writer.println(e.getName() + "," + e.getStatus() + "," + e.getDueDate() + ",");
-//        }
         writer.close();
     }
 
-    public void load(String s, EntryManager em) throws IOException, JSONException, ParseException {
-        JSONParser parser = new JSONParser();
-        JSONArray a = (JSONArray) parser.parse(new FileReader("s"));
-        if (a.get(0).equals(DAILY_CHECKLIST_NAME)) {
+    //Code Reference from sample JSON Parser file from 210 git hub repository
+    public void parse(String s, EntryManager em) {
+        try {
+            InputStream is = new FileInputStream(s+".json");
+            String jsonData =  readSource(is);
+            load(jsonData,em);
+            System.out.println(em.getListName()+" "+"Loaded!");
+        } catch (IOException e) {
+            System.out.println("Error reading file...");
+            e.printStackTrace();
+        } catch (JSONException e) {
+            System.out.println("Error parsing JSON data");
+            e.printStackTrace();
+        }
+
+    }
+    private String readSource(InputStream is) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line;
+
+        while((line = br.readLine()) != null) {
+            sb.append(line);
+            sb.append("\n");
+        }
+
+        br.close();
+
+        return sb.toString();
+    }
+
+    public void load(String jsondata, EntryManager em) throws JSONException {
+        JSONArray aTodoList = new JSONArray(jsondata);
+        if (aTodoList.get(0).equals(DAILY_CHECKLIST_NAME)) {
             em = (DailyChecklist) em;
-        } else if (a.get(0).equals(REGULAR_LIST_NAME)) {
+        } else if (aTodoList.get(0).equals(REGULAR_LIST_NAME)) {
             em = (RegularEntries) em;
         }
-
+        parseEntry(aTodoList,em);
     }
 
-    private void parseEntry(JSONArray array) throws JSONException {
+    private void parseEntry(JSONArray array,EntryManager em) throws JSONException {
         for (int index = 1; index < array.length(); index++) {
+            Entry e = new Entry();
             JSONObject entryObject = array.getJSONObject(index);
             String name = entryObject.getString("Entry Name");
-
+            String status = entryObject.getString("Status");
+            LocalDate dueDate =LocalDate.parse(entryObject.getString("Due Date"));
+            e.setName(name);
+            e.setStatus(status);
+            e.setDueDate(dueDate);
+            if (status.equals(em.getDoneStatus())){
+            LocalDate dateUpdated= LocalDate.parse(entryObject.getString("Date Done"));
+            e.setDateDone(dateUpdated);
         }
+        DLReset(e,em);
+            e.setDaysLeft(df.getDayCount(e.getDueDate()));
+            addAfterParse(e,em);
     }
+    }
+    private void addAfterParse(Entry e, EntryManager em){
+        if (!(em.checkDuplicates(e.getName()))){
+            em.listentries.add(e);
+            e.setEntryManager(em);
+        }
+        }
+
+private void DLReset(Entry e, EntryManager dl) {
+        if (dl.getListName().equals(DAILY_CHECKLIST_NAME)) {
+            String dt = e.getDueDate().toString();
+            String tommorow = df.tomorrow.toString();
+            if (e.getStatus().equals(dl.getDoneStatus()) && !(dt.equals(tommorow))) {
+                e.setStatus(dl.getNotDoneStatus());
+            }
+        }
+}
 }
 
 
-
-
-//    public static ArrayList<String> splitOnComma(String line) {
-//        String[] splits = line.split(",");
-//        return new ArrayList<>(Arrays.asList(splits));
-//    }
-//}

@@ -14,7 +14,7 @@ public class LoadableTest {
     public void testLoad() throws IOException, JSONException {
 //        Loadable loadable = new RegularEntries();
         Loadable loadable = new FileManager();
-        loadable.load("Test.txt");
+//        loadable.load("Test.txt");
         EntryManager list = (EntryManager) loadable; //this typecasts the loadable to EntryManager aka promotes it, talked to TA Pray about type casting
         Entry e = list.listentries.get(0);
         assertEquals(e.getName(), "fine");

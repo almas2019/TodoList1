@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import org.json.JSONException;
 import ui.Entry;
 import ui.EntryManager;
+import ui.FileManager;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -47,6 +48,7 @@ public class Controller {
 
     ModelFunctions mf = new ModelFunctions();
     EntryManager em;
+    FileManager fileManager = new FileManager();
 private String DAILY_CHECKLIST_NAME = mf.dailyChecklist.getListName();
 private String REGULAR_LIST_NAME = mf.regularEntries.getListName();
     private void chooseList(String name, EntryManager manager) {
@@ -104,16 +106,16 @@ private void addtoDailyList() {
         listOption.setVisible(true);
     });
 }
-private void addtoObservableList(EntryManager em, ObservableList obs){
-        String DONE = em.getDoneStatus();
-        String NOTDONE = em.getNotDoneStatus();
-        for(Entry e: em.listentries){
-            if (e.getStatus().equals(NOTDONE)){
-
-            }
-        }
-
-}
+//private void addtoObservableList(EntryManager em, ObservableList obs){
+//        String DONE = em.getDoneStatus();
+//        String NOTDONE = em.getNotDoneStatus();
+//        for(Entry e: em.listentries){
+//            if (e.getStatus().equals(NOTDONE)){
+//
+//            }
+//        }
+//
+//}
     private void addtoRegularEntries() {
         editListsButton.setVisible(false);
             enter.setOnAction((ActionEvent event) -> {
@@ -145,6 +147,7 @@ private void addtoObservableList(EntryManager em, ObservableList obs){
         } else if (em.getListName().equals(REGULAR_LIST_NAME)) {
             addtoRegularEntries();
         }
+        mf.sizeofLists(em);
     }
     public void removeItems(){
         System.out.println("Please enter the name of the item");
@@ -159,6 +162,7 @@ private void addtoObservableList(EntryManager em, ObservableList obs){
                     mf.regularEntries.checkOffRL(field.getText());
                 }
                 em.taskDonePrint();
+                mf.sizeofLists(em);
             } catch (InvalidItemException e) {
                 System.out.println(e.getMessage());
             }
@@ -186,7 +190,6 @@ private void addtoObservableList(EntryManager em, ObservableList obs){
 
         });
     }
-
     private void updateTextArea(final String text) {
         Platform.runLater(() -> dialog.appendText(text));
     }

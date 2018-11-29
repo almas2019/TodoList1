@@ -69,7 +69,7 @@ public void testTakeout() {
     } catch (InvalidItemException e) {
         System.out.println("Passed on Talk");
     }
-    assertEquals(1,reg.numdone(reg.DoneStatus));
+    assertEquals(1,reg.numdone(reg.getDoneStatus()));
 }
 }
 

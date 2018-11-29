@@ -29,7 +29,7 @@ public class DailyChecklist extends EntryManager {
     }
 
     public void checkOffDL(String value) throws InvalidItemException {
-        LocalDate tomorrow = date1.today.plusDays(1);
+        LocalDate tomorrow = date1.tomorrow;
         super.checkOffEntries(value, 1, tomorrow);
     }
 }

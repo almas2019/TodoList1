@@ -4,6 +4,7 @@ import Exceptions.InvalidItemException;
 import Exceptions.InvalidListException;
 import WebsiteParser.InspirationalQuotes;
 import org.json.JSONException;
+import org.json.simple.parser.ParseException;
 import ui.EntryManager;
 import ui.FileManager;
 
@@ -22,7 +23,7 @@ private String REGULAR_LIST = mf.regularEntries.getListName();
     //Requires: String input
 //Modifies: this, listSize, numdone
 //Effects: Using user input creates new entries and changes entries in the list
-    public Model() throws IOException, JSONException {
+    public Model() throws IOException, JSONException, ParseException {
         String option;
         String choice;
 
@@ -91,12 +92,12 @@ private String REGULAR_LIST = mf.regularEntries.getListName();
             } else if (option.equals("4")) {
                 System.out.println("Please write the name of the file you would like to save");
                 String fileName = scanner.nextLine();
-                fileManager.modelSave(choice, fileName,em);
+                fileManager.save(fileName,em);
 
             } else if (option.equals("5")) {
                 System.out.println("Please write the name of the file you would like to load");
                 String loadName = scanner.nextLine();
-                fileManager.modelLoad(choice, loadName,em);
+                fileManager.parse(loadName,em);
             } else if (option.equals("6")) {
                 System.out.println("Please enter the name of the item you would like to move");
                 System.out.println("Items on Daily CheckList:");

@@ -1,10 +1,7 @@
 package Model;
 
 import Exceptions.InvalidItemException;
-import ui.DailyChecklist;
-import ui.DateFeatures;
-import ui.Entry;
-import ui.RegularEntries;
+import ui.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -48,6 +45,15 @@ public class ModelFunctions {
             System.out.println(regularEntries.listentries.size());
         }
     }
+public void sizeofLists(EntryManager em){
+    if (em.getListName().equals(dailyChecklist.getListName())) {
+        System.out.println("These are the number of items on your Daily CheckList");
+        System.out.println(dailyChecklist.listentries.size());
+    } else if (em.getListName().equals(regularEntries.getListName())) {
+        System.out.println("These are the number of items on your Normal ToDo List");
+        System.out.println(regularEntries.listentries.size());
+    }
+}
 
 
     public boolean onDailyList(String name) {
@@ -71,11 +77,11 @@ public class ModelFunctions {
     public void moveEntry(String name) throws InvalidItemException {
         if (onDailyList(name)) {
             e.setEntryManager(regularEntries);
-            if (e.getStatus().equals(dailyChecklist.DoneStatus)) {
+            if (e.getStatus().equals(dailyChecklist.getDoneStatus())) {
                 regularEntries.checkOffRL(name);
             }
         } else if (onRegularEntries(name)) {
-            if (e.getStatus().equals(regularEntries.DoneStatus)) {
+            if (e.getStatus().equals(regularEntries.getDoneStatus())) {
                 dailyChecklist.checkOffDL(name);
             } else {
                 DateFeatures df = new DateFeatures();

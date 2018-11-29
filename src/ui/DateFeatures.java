@@ -9,6 +9,7 @@ import java.util.Calendar;
 
 public class DateFeatures {
     public LocalDate today = LocalDate.now();
+    public LocalDate tomorrow = today.plusDays(1);
 public DateFeatures() {
 }
 //REQUIRES: a Date in the format YYYY-MM-DD

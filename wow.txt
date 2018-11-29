@@ -1,1 +1,0 @@
-["Daily CheckList",{"Status":"In Progress","Entry Name":"fun","Due Date":"2018-11-28"},{"Status":"In Progress","Entry Name":"wow","Due Date":"2018-11-28"}]
