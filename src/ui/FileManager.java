@@ -4,10 +4,10 @@ import Model.ModelFunctions;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -16,101 +16,76 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FileManager implements Saveable, Loadable {
+    private String DAILY_CHECKLIST_NAME = "Daily CheckList";
+    private String REGULAR_LIST_NAME = "Regular ToDo List";
+
     public void modelSave(String choice, String fileName, EntryManager em) throws IOException, JSONException {
         if (choice.equals("A")) {
-         save(fileName + ".txt", em);
+            save(fileName + ".txt", em);
         } else if (choice.equals("B")) {
-            save(fileName + ".txt",em);
+            save(fileName + ".txt", em);
         }
     }
 //    public void save(String s) {
 //
 //    }
 
-    public void modelLoad(String choice, String loadName) throws IOException, JSONException {
+    public void modelLoad(String choice, String loadName, EntryManager em) throws IOException, JSONException, ParseException {
         if (choice.equals("B")) {
-           load(loadName + ".txt");
+            load(loadName + ".txt", em);
             System.out.println("ToDo List Loaded");
         } else if (choice.equals("A")) {
-            load(loadName + ".txt");
+            load(loadName + ".txt", em);
             System.out.println("Daily Checklist Loaded");
         }
     }
+
     //code reference for save from FileReaderWriter file from 210 repository
-    public void save(String s,EntryManager em) throws IOException, JSONException {
+    public void save(String s, EntryManager em) throws IOException, JSONException {
         JSONArray array = new JSONArray();
         array.put(em.listName);
-        for (Entry e:em.listentries){
+        for (Entry e : em.listentries) {
             JSONObject obj = new JSONObject();
-            obj.put("Entry Name",e.getName());
-            obj.put("Status",e.getStatus());
+            obj.put("Entry Name", e.getName());
+            obj.put("Status", e.getStatus());
             obj.put("Due Date", e.getDueDate());
             obj.put("Date Done", e.getDateDone());
 //            obj.put("Type of Entry Manager", e.getEntryManager());
             array.put(obj);
         }
         PrintWriter writer = new PrintWriter(s, "UTF-8");
-       writer.println (array.toString());
+        writer.println(array.toString());
 //        for (Entry e :em.listentries {
 //            writer.println(e.getName() + "," + e.getStatus() + "," + e.getDueDate() + ",");
 //        }
         writer.close();
     }
 
-    public void load(String s) throws IOException, JSONException {
-
-//            JSONArray a = (JSONArray) parser.parse(new FileReader("s"));]
-//
-//        for (Object o : a) {
-//            JSONObject person = (JSONObject) o;
-//
-//            String name = (String) person.get("name");
-//            System.out.println(name);
-//
-//            String city = (String) person.get("city");
-//            System.out.println(city);
-//
-//            String job = (String) person.get("job");
-//            System.out.println(job);
-//
-//            JSONArray cars = (JSONArray) person.get("cars");
-
-
-            List<String> lines = Files.readAllLines(Paths.get(s));
-            for (String line : lines) {
-//            ArrayList<String> partsOfLine = splitOnComma(line);
-                Entry e = new Entry();
-//            e.setName(partsOfLine.get(0));
-//            e.setStatus(partsOfLine.get(1));
-//            String date = partsOfLine.get(2);
-                JSONArray array = new JSONArray();
-//            array.getJSONObject(0)
-//            LocalDate localDate = LocalDate.parse(date);
-//            LocalDate today = LocalDate.now();
-//            if (!localDate.equals(today) && (e.getStatus().equals("In Progress"))) {
-//                e.setDueDate(today);
-//            }
-//            if (localDate.equals(today) && e.getStatus().equals("Done for Today")) {
-//                e.setDueDate(today);
-//                e.setDaysLeft(0);
-//                e.setStatus("In Progress");
-//            } else {
-//                e.setDueDate(localDate);
-//            }
-                DateFeatures date1 = new DateFeatures();
-                if (e.getStatus().equals("Not Done"))
-                    e.setDaysLeft(date1.getDayCount(e.getDueDate()));
-                else {
-                    e.setDaysLeft(0);
-                }
-                e.getEntryManager().listentries.add(e);
-            }
+    public void load(String s, EntryManager em) throws IOException, JSONException, ParseException {
+        JSONParser parser = new JSONParser();
+        JSONArray a = (JSONArray) parser.parse(new FileReader("s"));
+        if (a.get(0).equals(DAILY_CHECKLIST_NAME)) {
+            em = (DailyChecklist) em;
+        } else if (a.get(0).equals(REGULAR_LIST_NAME)) {
+            em = (RegularEntries) em;
         }
-//    }
 
+    }
 
-    public static ArrayList<String> splitOnComma(String line) {
-        String[] splits = line.split(",");
-        return new ArrayList<>(Arrays.asList(splits));
+    private void parseEntry(JSONArray array) throws JSONException {
+        for (int index = 1; index < array.length(); index++) {
+            JSONObject entryObject = array.getJSONObject(index);
+            String name = entryObject.getString("Entry Name");
+
+        }
     }
 }
+
+
+
+
+//    public static ArrayList<String> splitOnComma(String line) {
+//        String[] splits = line.split(",");
+//        return new ArrayList<>(Arrays.asList(splits));
+//    }
+//}

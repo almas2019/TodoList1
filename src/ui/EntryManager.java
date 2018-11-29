@@ -9,8 +9,8 @@ import java.util.*;
 public abstract class EntryManager extends Observable {
     public ArrayList<Entry> listentries = new ArrayList<>();
     Entry entry = new Entry();
-    public String DoneStatus;
-    protected String NotDoneStatus;
+    private String DoneStatus;
+    private String NotDoneStatus;
     public DateFeatures date1 = new DateFeatures();
     protected String listName;
 
@@ -21,7 +21,13 @@ public abstract class EntryManager extends Observable {
     public void setListName(String listName) {
         this.listName = listName;
     }
+    public String getDoneStatus() {
+        return DoneStatus;
+    }
 
+    public String getNotDoneStatus() {
+        return NotDoneStatus;
+    }
     public void setDoneandNotDone() {
         DoneStatus="";
         NotDoneStatus="";

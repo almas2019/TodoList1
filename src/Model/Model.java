@@ -96,7 +96,7 @@ private String REGULAR_LIST = mf.regularEntries.getListName();
             } else if (option.equals("5")) {
                 System.out.println("Please write the name of the file you would like to load");
                 String loadName = scanner.nextLine();
-                fileManager.modelLoad(choice, loadName);
+                fileManager.modelLoad(choice, loadName,em);
             } else if (option.equals("6")) {
                 System.out.println("Please enter the name of the item you would like to move");
                 System.out.println("Items on Daily CheckList:");

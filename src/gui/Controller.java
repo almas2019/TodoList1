@@ -39,7 +39,11 @@ public class Controller {
     private InspirationalQuotes iq = new InspirationalQuotes();
     public DatePicker dp = new DatePicker();
     private LocalDate localDate;
-    private ObservableList<Entry> notDone;
+    private ObservableList<Entry> DLnotDone;
+    private ObservableList<Entry> RLnotDone;
+    private ObservableList<Entry> DLDone;
+    private ObservableList<Entry> RLDone;
+    private ListView<Entry> listView;
 
     ModelFunctions mf = new ModelFunctions();
     EntryManager em;
@@ -98,8 +102,17 @@ private void addtoDailyList() {
         textBoxInVisible();
         field.clear();
         listOption.setVisible(true);
-
     });
+}
+private void addtoObservableList(EntryManager em, ObservableList obs){
+        String DONE = em.getDoneStatus();
+        String NOTDONE = em.getNotDoneStatus();
+        for(Entry e: em.listentries){
+            if (e.getStatus().equals(NOTDONE)){
+
+            }
+        }
+
 }
     private void addtoRegularEntries() {
         editListsButton.setVisible(false);
