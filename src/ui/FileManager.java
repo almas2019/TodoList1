@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -26,7 +27,7 @@ public class FileManager implements Saveable, Loadable {
 //
 //    }
 
-    public void modelLoad(String choice, String loadName) throws IOException {
+    public void modelLoad(String choice, String loadName) throws IOException, JSONException {
         if (choice.equals("B")) {
            load(loadName + ".txt");
             System.out.println("ToDo List Loaded");
@@ -56,15 +57,33 @@ public class FileManager implements Saveable, Loadable {
         writer.close();
     }
 
-    public void load(String s) throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get(s));
-        for (String line : lines) {
+    public void load(String s) throws IOException, JSONException {
+
+//            JSONArray a = (JSONArray) parser.parse(new FileReader("s"));]
+//
+//        for (Object o : a) {
+//            JSONObject person = (JSONObject) o;
+//
+//            String name = (String) person.get("name");
+//            System.out.println(name);
+//
+//            String city = (String) person.get("city");
+//            System.out.println(city);
+//
+//            String job = (String) person.get("job");
+//            System.out.println(job);
+//
+//            JSONArray cars = (JSONArray) person.get("cars");
+
+
+            List<String> lines = Files.readAllLines(Paths.get(s));
+            for (String line : lines) {
 //            ArrayList<String> partsOfLine = splitOnComma(line);
-            Entry e = new Entry();
+                Entry e = new Entry();
 //            e.setName(partsOfLine.get(0));
 //            e.setStatus(partsOfLine.get(1));
 //            String date = partsOfLine.get(2);
-            JSONArray array = new JSONArray();
+                JSONArray array = new JSONArray();
 //            array.getJSONObject(0)
 //            LocalDate localDate = LocalDate.parse(date);
 //            LocalDate today = LocalDate.now();
@@ -78,15 +97,16 @@ public class FileManager implements Saveable, Loadable {
 //            } else {
 //                e.setDueDate(localDate);
 //            }
-            DateFeatures date1 = new DateFeatures();
-            if (e.getStatus().equals("Not Done"))
-                e.setDaysLeft(date1.getDayCount(e.getDueDate()));
-            else {
-                e.setDaysLeft(0);
+                DateFeatures date1 = new DateFeatures();
+                if (e.getStatus().equals("Not Done"))
+                    e.setDaysLeft(date1.getDayCount(e.getDueDate()));
+                else {
+                    e.setDaysLeft(0);
+                }
+                e.getEntryManager().listentries.add(e);
             }
-            e.getEntryManager().listentries.add(e);
         }
-    }
+//    }
 
 
     public static ArrayList<String> splitOnComma(String line) {

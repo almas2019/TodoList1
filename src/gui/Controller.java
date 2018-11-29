@@ -4,10 +4,12 @@ import Exceptions.InvalidItemException;
 import Model.ModelFunctions;
 import WebsiteParser.InspirationalQuotes;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.json.JSONException;
+import ui.Entry;
 import ui.EntryManager;
 
 import java.io.IOException;
@@ -30,19 +32,33 @@ public class Controller {
     public MenuItem add = new MenuItem();
     public MenuItem remove = new MenuItem();
     public MenuItem seeAll = new MenuItem();
+    public MenuItem move = new MenuItem();
     public MenuButton editListsButton = new MenuButton();
     private String text = "";
     public Button enter2 = new Button();
     private InspirationalQuotes iq = new InspirationalQuotes();
     public DatePicker dp = new DatePicker();
     private LocalDate localDate;
+    private ObservableList<Entry> notDone;
 
     ModelFunctions mf = new ModelFunctions();
     EntryManager em;
 private String DAILY_CHECKLIST_NAME = mf.dailyChecklist.getListName();
 private String REGULAR_LIST_NAME = mf.regularEntries.getListName();
+    private void chooseList(String name, EntryManager manager) {
+        redirectSystemStreams();
+        System.out.println("Welcome to the" + " "+ name);
+        System.out.println("Please Select an Option");
+        em = manager;
+        listOption.setVisible(false);
+        editListsButton.setVisible(true);
+    }
     public void chooseRegList() {
         chooseList(REGULAR_LIST_NAME, mf.regularEntries);
+    }
+    public void chooseDailyList() {
+        chooseList(mf.dailyChecklist.getListName(), mf.dailyChecklist);
+
     }
 public void showAllItems(){
     Platform.runLater(() ->{
@@ -59,10 +75,7 @@ public void addInspiration() throws IOException, JSONException {
         iq.inspiration();
 }
 
-    public void chooseDailyList() {
-        chooseList(mf.dailyChecklist.getListName(), mf.dailyChecklist);
 
-    }
     public void setText(String t) {
 this.text = t;
     }
@@ -81,9 +94,7 @@ private void addtoDailyList() {
     editListsButton.setVisible(false);
     enter.setOnAction((ActionEvent event) -> {
         System.out.println("Item Added");
-        String l;
-        l = field.getText();
-        mf.dailyChecklist.newEntry(l);
+        mf.dailyChecklist.newEntry(field.getText());
         textBoxInVisible();
         field.clear();
         listOption.setVisible(true);
@@ -144,15 +155,25 @@ private void addtoDailyList() {
             editListsButton.setVisible(false);
         });
     }
+    public void moveItems(){
+        System.out.println("What would you like to move?");
+        editListsButton.setVisible(false);
+        textBoxVisible();
+        em.print();
+        enter.setOnAction((ActionEvent event) -> {
+            try {
+                mf.moveEntry(field.getText());
+                System.out.println("Item Moved!");
+            } catch (InvalidItemException e) {
+                System.out.println(e.getMessage());
+            }
+            textBoxInVisible();
+            field.clear();
+            listOption.setVisible(true);
 
-    private void chooseList(String name, EntryManager manager) {
-        redirectSystemStreams();
-        System.out.println("Welcome to the" + " "+ name);
-        System.out.println("Please Select an Option");
-        em = manager;
-        listOption.setVisible(false);
-        editListsButton.setVisible(true);
+        });
     }
+
     private void updateTextArea(final String text) {
         Platform.runLater(() -> dialog.appendText(text));
     }

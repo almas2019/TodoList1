@@ -2,6 +2,7 @@ package Model;
 
 import Exceptions.InvalidItemException;
 import ui.DailyChecklist;
+import ui.DateFeatures;
 import ui.Entry;
 import ui.RegularEntries;
 
@@ -10,9 +11,9 @@ import java.time.format.DateTimeParseException;
 
 
 
-public class ModelFunctions{
-   public DailyChecklist dailyChecklist = new DailyChecklist();
-   public RegularEntries regularEntries = new RegularEntries();
+public class ModelFunctions {
+    public DailyChecklist dailyChecklist = new DailyChecklist();
+    public RegularEntries regularEntries = new RegularEntries();
     public Entry e = new Entry();
 
     //REQUIRES: Non empty list, date must be in format YYYY-MM-DD
@@ -50,18 +51,19 @@ public class ModelFunctions{
 
 
     public boolean onDailyList(String name) {
-     for (Entry e : dailyChecklist.listentries) {
-         if (e.getName().equals(name));
-         this.e = e;
-         return true;
-     }
-     return false;
+        for (Entry e : dailyChecklist.listentries) {
+            if (e.getName().equals(name)) ;
+            this.e = e;
+            return true;
+        }
+        return false;
     }
+
     public boolean onRegularEntries(String name) {
         for (Entry e : regularEntries.listentries) {
             if (e.getName().equals(name))
                 this.e = e;
-                return true;
+            return true;
         }
         return false;
     }
@@ -69,19 +71,21 @@ public class ModelFunctions{
     public void moveEntry(String name) throws InvalidItemException {
         if (onDailyList(name)) {
             e.setEntryManager(regularEntries);
-                if (e.getStatus().equals(dailyChecklist.DoneStatus)) {
-                    regularEntries.checkOffRL(name);
-                }
+            if (e.getStatus().equals(dailyChecklist.DoneStatus)) {
+                regularEntries.checkOffRL(name);
             }
+        } else if (onRegularEntries(name)) {
+            if (e.getStatus().equals(regularEntries.DoneStatus)) {
+                dailyChecklist.checkOffDL(name);
+            } else {
+                DateFeatures df = new DateFeatures();
+                e.setDueDate(df.today);
+                e.setEntryManager(dailyChecklist);
+            }
+        }
+    }
+}
 
-       else if (onRegularEntries(name)) {
-            e.setEntryManager(dailyChecklist);
-                if (e.getStatus().equals(regularEntries.DoneStatus)) {
-                    dailyChecklist.checkOffDL(name);
-                }
-            }
-        }
-        }
 
 
 

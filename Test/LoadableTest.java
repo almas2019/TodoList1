@@ -1,3 +1,4 @@
+import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import ui.*;
 
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 
 public class LoadableTest {
     @Test
-    public void testLoad() throws IOException {
+    public void testLoad() throws IOException, JSONException {
 //        Loadable loadable = new RegularEntries();
         Loadable loadable = new FileManager();
         loadable.load("Test.txt");

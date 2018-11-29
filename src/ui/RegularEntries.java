@@ -13,9 +13,9 @@ public class RegularEntries extends EntryManager {
     public RegularEntries(){
         setListName(REGULAR_LIST_NAME);
         addObserver(new StatusTracker());
+        setDoneandNotDone();
     }
     public void newEntry(String value, LocalDate date) {
-        setDoneandNotDone();
         super.newEntry(value, date);
 
     }

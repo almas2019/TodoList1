@@ -60,7 +60,7 @@ public class Entry {
             if (entryManager != null) {
                 entryManager.listentries.remove(this);
             }
-            this.entryManager = e;}
+          else  this.entryManager = e;}
            e.addEntry(this);}
     }
 

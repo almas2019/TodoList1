@@ -54,7 +54,7 @@
          <items>
             <MenuItem fx:id="add" mnemonicParsing="false" onAction="#addItems" text="Add an Item" />
             <MenuItem fx:id="remove" mnemonicParsing="false" onAction="#removeItems" text="Remove an Item" />
-            <MenuItem mnemonicParsing="false" text="Move an Item" />
+            <MenuItem fx:id="move" mnemonicParsing="false" onAction="#moveItems" text="Move an Item" />
             <MenuItem fx:id="seeAll" mnemonicParsing="false" onAction="#showAllItems" text="Show all Items" />
          </items>
       </MenuButton>

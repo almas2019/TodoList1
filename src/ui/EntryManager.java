@@ -10,8 +10,8 @@ public abstract class EntryManager extends Observable {
     public ArrayList<Entry> listentries = new ArrayList<>();
     Entry entry = new Entry();
     public String DoneStatus;
-    public String NotDoneStatus;
-    DateFeatures date1 = new DateFeatures();
+    protected String NotDoneStatus;
+    public DateFeatures date1 = new DateFeatures();
     protected String listName;
 
     public String getListName() {
