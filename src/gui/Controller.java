@@ -91,7 +91,7 @@ private void ListSave(EntryManager em) throws IOException, JSONException {
     private void ListLoad(EntryManager em) {
         redirectSystemStreams();
         textBoxVisible();
-        System.out.println("Please enter the name of the file with the list you want to loadArray");
+        System.out.println("Please enter the name of the file with the list you want to load");
         ;
         enter.setOnAction((ActionEvent event) -> {
             text = field.getText();

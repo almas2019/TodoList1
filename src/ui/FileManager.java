@@ -104,7 +104,9 @@ private void DLReset(Entry e, EntryManager dl) {
             String tommorow = df.tomorrow.toString();
             if (e.getStatus().equals(dl.getDoneStatus()) && !(dt.equals(tommorow))) {
                 e.setStatus(dl.getNotDoneStatus());
+                e.setDueDate(df.today);
             }
+            e.setDueDate(df.today);
         }
 }
 }
