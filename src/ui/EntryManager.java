@@ -55,17 +55,19 @@ public void whatDone(){
 }
     public void checkOffEntries(String name, long daysLeft, LocalDate dateDue) throws InvalidItemException{
      for (Entry i : listentries) {
-        if (i.getName().equals(name)) {
-            i.setStatus(DoneStatus);
-            i.setDateDone(date1.today);
-            setChanged();
-            StatusUpdater statusUpdater = new StatusUpdater(getListName(), i.getName(),i.getDateDone());
-            notifyObservers(statusUpdater);
-            i.setDaysLeft(daysLeft);
-            i.setDueDate(dateDue);
-            i.setEntryManager(this);
-            return; }
-        throw new InvalidItemException("To Do List Does Not Contain Item");}}
+         if (i.getName().equals(name)) {
+             i.setStatus(DoneStatus);
+             i.setDateDone(date1.today);
+             setChanged();
+             StatusUpdater statusUpdater = new StatusUpdater(getListName(), i.getName(), i.getDateDone());
+             notifyObservers(statusUpdater);
+             i.setDaysLeft(daysLeft);
+             i.setDueDate(dateDue);
+             i.setEntryManager(this);
+             return;
+         }
+     }
+        throw new InvalidItemException("To Do List Does Not Contain Item");}
     public void taskDonePrint(){
         System.out.println("These are the tasks that are done:");
         numdone(DoneStatus);
@@ -83,13 +85,6 @@ public void whatDone(){
     //REQUIRES: Non empty list
     //Modifies: this
     //Effects: changes a user specified entry to done
-//    public  void markDoneRL(String value) throws InvalidItemException {
-//        System.out.println("What task are you done?");
-//        print();
-//        System.out.println("These are the tasks that are done:");
-//        numdone(DoneStatus);
-//        printDone();
-//    }
 
     //Requires: Non empty list
     // Effects: returns the size of the list of entries that are done
@@ -128,9 +123,15 @@ public void whatDone(){
             }
         }
     }
-
-
-
+public List<Entry> createListonStatus(String s){
+        List<Entry> statusList = new ArrayList<>();
+    for (Entry entry : listentries) {
+        if (entry.getStatus().equals(s)) {
+            statusList.add(entry);
+        }
+        }
+    return statusList;
+}
     public void addEntry(Entry e) {
         if (!(listentries.contains(e))) {
             newEntry(e.getName(),e.getDueDate());
@@ -140,7 +141,6 @@ public void whatDone(){
     @Override
     public String toString() {
         return
-//                "listentries=" + listentries +
                 ", entry=" + entry.getName() +
                 ", Status='" + DoneStatus + '\'' +
                 ", Due Date='"+ entry.getDueDate()+

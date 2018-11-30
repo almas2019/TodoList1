@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Controller {
     public Controller () {
@@ -45,6 +46,7 @@ public class Controller {
     public MenuItem saveDL = new MenuItem();
     public MenuItem loadRL = new MenuItem();
     public MenuItem loadDL = new MenuItem();
+    public MenuItem about = new MenuItem();
     private LocalDate localDate;
     @FXML
     public ListView<Entry> listView;
@@ -53,6 +55,13 @@ private ObservableList<Entry> obsList = FXCollections.observableArrayList();
 ModelFunctions mf = new ModelFunctions();
     EntryManager em;
     FileManager fileManager = new FileManager();
+    @FXML
+    private void aboutLists(){
+        redirectSystemStreams();
+        System.out.println("This application was created by Almas Khan in Winter of 2018");
+        System.out.println("The Daily Check List is for repeating everyday tasks like chores");
+        System.out.println("The Regular To Do List is for all other tasks");
+    }
 private void ListSave(EntryManager em) throws IOException, JSONException {
     redirectSystemStreams();
         textBoxVisible();
@@ -88,6 +97,7 @@ private void ListSave(EntryManager em) throws IOException, JSONException {
             text = field.getText();
                 fileManager.parse(text, em);
                 textBoxInVisible();
+            System.out.println("These are all the items on this List");
                 setListView(em);
 
             });
@@ -108,7 +118,9 @@ private String REGULAR_LIST_NAME = mf.regularEntries.getListName();
         em = manager;
         chooseList.setVisible(false);
         listOptions.setVisible(true);
-        setListView();
+        mf.sizeofLists(em);
+        System.out.println("These are the items that are currently"+" "+em.getNotDoneStatus()+" on your List");
+        setListView(em.createListonStatus(em.getNotDoneStatus()));
     }
     public void chooseRegList() {
         chooseList(REGULAR_LIST_NAME, mf.regularEntries);
@@ -118,7 +130,9 @@ private String REGULAR_LIST_NAME = mf.regularEntries.getListName();
 
     }
 public void showAllItems(){
-        setListView();}
+        setListView(em.listentries);
+    listOptions.setVisible(false);
+    chooseList.setVisible(true);}
 @FXML
 public void addInspiration() throws IOException, JSONException {
         redirectSystemStreams();
@@ -148,8 +162,7 @@ private void addtoDailyList() {
         textBoxInVisible();
         field.clear();
         chooseList.setVisible(true);
-        mf.sizeofLists(em);
-        setListView();
+     notDoneListView();
     });
 }
 
@@ -160,9 +173,10 @@ private void setListView(EntryManager em){
 }
 
     @FXML
-private void setListView(){
-           obsList = FXCollections.observableArrayList(em.listentries);
-           listView.toString();
+private void setListView(List<Entry> e){
+//           obsList = FXCollections.observableArrayList(em.listentries);
+        obsList = FXCollections.observableArrayList(e);
+        listView.toString();
        listView.setItems(obsList);}
 
 private String getSelectedItemName() {
@@ -188,12 +202,16 @@ private String getSelectedItemName() {
                                 dp.setValue(null);
                         System.out.println("Item Added");
                         enter2.setVisible(false);
-                        mf.sizeofLists(em);
-                        setListView();
+                       notDoneListView();
                             });
                     });
 
 
+    }
+    private void notDoneListView(){
+        System.out.println("The number of tasks not done"+em.createListonStatus(em.getNotDoneStatus()).size());
+        System.out.println("These are the tasks you are currently"+em.getNotDoneStatus());
+        setListView(em.createListonStatus(em.getNotDoneStatus()));
     }
     public void addItems() {
         System.out.println("Please enter the name of the item");
@@ -212,6 +230,7 @@ private String getSelectedItemName() {
         if(!checkIfEmpty()) {
             System.out.println("Please select the item you wish to remove and press enter");
             enter.setVisible(true);
+            setListView(em.listentries);
             enter.setOnAction((ActionEvent event) -> {
                 em.listentries.remove(listView.getSelectionModel().getSelectedItem());
                 listView.refresh();
@@ -219,7 +238,7 @@ private String getSelectedItemName() {
                 mf.sizeofLists(em);
                 enter.setVisible(false);
                 chooseList.setVisible(true);
-                setListView();
+                setListView(em.listentries);
             });
         }
     }
@@ -238,25 +257,30 @@ private boolean checkIfEmpty(){
         if (!checkIfEmpty()) {
             System.out.println("Please select the item in the list below that is done and press enter");
             enter.setVisible(true);
+            listOptions.setVisible(false);
             enter.setOnAction((ActionEvent event) -> {
                 try {
                     if (em.getListName().equals(DAILY_CHECKLIST_NAME)) {
                         mf.dailyChecklist.markDoneDL(getSelectedItemName());
-                        listView.refresh();
+                       ListViewnotDone();
                     } else if (em.getListName().equals(REGULAR_LIST_NAME)) {
                         mf.regularEntries.markDoneRL(getSelectedItemName());
-                        listView.refresh();
+                        ListViewnotDone();
                     }
-                    em.taskDonePrint();
-                    mf.sizeofLists(em);
                 } catch (InvalidItemException e) {
                     System.out.println(e.getMessage());
                 }
-
+                enter.setVisible(false);
                 chooseList.setVisible(true);
                 listOptions.setVisible(false);
+                listView.refresh();
             });
         }
+    }
+    private void ListViewnotDone(){
+        System.out.println("These are the items that are"+" "+em.getDoneStatus());
+        setListView(em.createListonStatus(em.getDoneStatus()));
+        listView.refresh();
     }
     public void moveItems() {
         if (!checkIfEmpty()) {
@@ -273,7 +297,7 @@ private boolean checkIfEmpty(){
                 textBoxInVisible();
                 field.clear();
                 chooseList.setVisible(true);
-                setListView();
+                setListView(em.listentries);
                 listView.refresh();
 
             });

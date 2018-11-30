@@ -46,6 +46,7 @@ public class Entry {
     public void setDaysLeft(long daysLeft) {
         this.daysLeft = daysLeft;
     }
+
     public LocalDate getDateDone() {
         return dateDone;
     }
@@ -56,11 +57,12 @@ public class Entry {
 
     @Override
     public String toString() {
-        return    name  +
+        return name +
                 ", Due Date:" + dueDate +
                 ", Days Left until its Due:" + daysLeft +
-                ", Status='" + status + '\'' ;
+                ", Status='" + status + '\'';
     }
+
 
     public void setEntryManager(EntryManager e) {
         if (!e.equals(entryManager)) {
