@@ -16,11 +16,8 @@ public class ToDO extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    //Scene Builder recommended by a TA in 210 lab (Mukund I think)
+
     //GUI partly created using Gluon SceneBuilder
-// Learned about Gluon Scene builder as well as setting the stage and fxml DocPath from the following websites:
-//https://code.makery.ch/library/javafx-tutorial/part1/
-//https://docs.oracle.com/javase/8/scene-builder-2/get-started-tutorial/jfxsb-get_started.htm --> This is oracle Docs on Scenebuilder
     @Override
     public void start(Stage stage) throws IOException {
 FXMLLoader loader = new FXMLLoader();

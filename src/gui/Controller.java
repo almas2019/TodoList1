@@ -19,7 +19,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.List;
-//Found latest version of Scene Builder based on recommendation from this article https://dzone.com/articles/bye-bye-javafx-scene-builder
+
 public class Controller {
     public Controller () {
     }
@@ -165,7 +165,7 @@ private void addtoDailyList() {
     });
 }
 //How to set List of View idea similar to https://stackoverflow.com/questions/36629522/convert-arraylist-to-observable-list-for-javafx-program
-//Stack Overflow User James D gave an example about Combo Boxes and I read it and applied the concepts to my code
+//Stack Overflow User James D gave an example about Combo Boxes and I read it and applied the concepts to my code (as I was not using combo boxes)
 // Also Oracle Docs on ListView were helpful
 private void setListView(EntryManager em){
     obsList = FXCollections.observableArrayList(em.listentries);
@@ -178,7 +178,7 @@ private void setListView(List<Entry> e){
         obsList = FXCollections.observableArrayList(e);
         listView.toString();
        listView.setItems(obsList);}
-//Oracle Docs on List View were helpful for this https://docs.oracle.com/javafx/2/ui_controls/list-view.htm
+
 private String getSelectedItemName() {
  return (listView.getSelectionModel().getSelectedItem().getName());
     }
