@@ -102,10 +102,10 @@ private void ListSave(EntryManager em) throws IOException, JSONException {
 
             });
     }
-    public void loadDailyList() throws IOException, JSONException {
+    public void loadDailyList()  {
     ListLoad(mf.dailyChecklist);
     }
-    public void loadRegularList()throws IOException, JSONException {
+    public void loadRegularList() {
         ListLoad(mf.regularEntries);
     }
 
