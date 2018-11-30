@@ -78,11 +78,11 @@ public void sizeofLists(EntryManager em){
         if (onDailyList(name)) {
             e.setEntryManager(regularEntries);
             if (e.getStatus().equals(dailyChecklist.getDoneStatus())) {
-                regularEntries.checkOffRL(name);
+                regularEntries.markDoneRL(name);
             }
         } else if (onRegularEntries(name)) {
             if (e.getStatus().equals(regularEntries.getDoneStatus())) {
-                dailyChecklist.checkOffDL(name);
+                dailyChecklist.markDoneDL(name);
             } else {
                 DateFeatures df = new DateFeatures();
                 e.setDueDate(df.today);

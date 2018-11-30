@@ -75,9 +75,9 @@ private String REGULAR_LIST = mf.regularEntries.getListName();
                    em.whatDone();
                     String checkoff = scanner.nextLine();
                     if (em.getListName().equals(DAILY_CHECKLIST)){
-                    mf.dailyChecklist.checkOffDL(checkoff);}
+                    mf.dailyChecklist.markDoneDL(checkoff);}
                     if(em.getListName().equals(REGULAR_LIST)){
-                        mf.regularEntries.checkOffRL(checkoff);
+                        mf.regularEntries.markDoneRL(checkoff);
                     }
                     em.taskDonePrint();
 
@@ -95,7 +95,7 @@ private String REGULAR_LIST = mf.regularEntries.getListName();
                 fileManager.save(fileName,em);
 
             } else if (option.equals("5")) {
-                System.out.println("Please write the name of the file you would like to load");
+                System.out.println("Please write the name of the file you would like to loadArray");
                 String loadName = scanner.nextLine();
                 fileManager.parse(loadName,em);
             } else if (option.equals("6")) {

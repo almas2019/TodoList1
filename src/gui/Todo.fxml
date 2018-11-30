@@ -2,30 +2,32 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="468.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
+<AnchorPane prefHeight="666.0" prefWidth="644.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
    <children>
       <MenuBar prefHeight="29.0" prefWidth="615.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
+            <Menu mnemonicParsing="false" text="Save">
+              <items>
+                <MenuItem fx:id="saveRL" mnemonicParsing="false" onAction="#saveRegularList" text="Regular To Do" />
+              <MenuItem fx:id="saveDL" mnemonicParsing="false" onAction="#saveDailyList" text="Daily Check List" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Load">
+              <items>
+                  <MenuItem fx:id="loadRL" mnemonicParsing="false" onAction="#loadRegularList" text=" Regular To Do List" />
+                <MenuItem fx:id="loadDL" mnemonicParsing="false" onAction="#loadDailyList" text="Daily Check List" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
@@ -33,30 +35,28 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Text fontSmoothingType="LCD" layoutX="3.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to the ToDO List!" textAlignment="CENTER" wrappingWidth="608.2060546875" />
+      <Text fontSmoothingType="LCD" layoutX="3.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Your ToDO List!" textAlignment="CENTER" wrappingWidth="608.2060546875" />
       <Button fx:id="enter" layoutX="365.0" layoutY="177.0" mnemonicParsing="false" text="Enter" visible="false" />
       <TextField fx:id="field" layoutX="198.0" layoutY="177.0" visible="false" />
       <DatePicker fx:id="dp" layoutX="185.0" layoutY="221.0" promptText="Select a date" visible="false" />
       <Button fx:id="enter2" layoutX="391.0" layoutY="221.0" mnemonicParsing="false" text="Enter" visible="false" />
-      <ScrollPane layoutX="-3.0" layoutY="294.0">
-         <content>
-            <TextArea fx:id="dialog" editable="false" prefHeight="172.0" prefWidth="615.0" />
-         </content>
-      </ScrollPane>
-      <MenuButton fx:id="listOption" layoutX="233.0" layoutY="83.0" mnemonicParsing="false" text="Choose an Option">
+      <MenuButton fx:id="chooseList" layoutX="233.0" layoutY="83.0" mnemonicParsing="false" text="Choose a List">
         <items>
           <MenuItem fx:id="reg" mnemonicParsing="false" onAction="#chooseRegList" text="Regular To Do List" />
             <MenuItem fx:id="daily" mnemonicParsing="false" onAction="#chooseDailyList" text="Daily Checklist" />
-          <MenuItem fx:id="quote" mnemonicParsing="false" onAction="#addInspiration" text="Inspirational Quote" />
         </items>
       </MenuButton>
-      <MenuButton fx:id="editListsButton" layoutX="234.0" layoutY="133.0" mnemonicParsing="false" text="Choose an Option" visible="false">
+      <MenuButton fx:id="listOptions" layoutX="234.0" layoutY="133.0" mnemonicParsing="false" text="Choose an Option" visible="false">
          <items>
             <MenuItem fx:id="add" mnemonicParsing="false" onAction="#addItems" text="Add an Item" />
-            <MenuItem fx:id="remove" mnemonicParsing="false" onAction="#removeItems" text="Remove an Item" />
+            <MenuItem fx:id="markDoneButton" mnemonicParsing="false" onAction="#markDone" text="Mark Item as Done" />
             <MenuItem fx:id="move" mnemonicParsing="false" onAction="#moveItems" text="Move an Item" />
             <MenuItem fx:id="seeAll" mnemonicParsing="false" onAction="#showAllItems" text="Show all Items" />
+            <MenuItem fx:id="remove" mnemonicParsing="false" onAction="#removeItems" text="Remove an Item" />
          </items>
       </MenuButton>
+      <TextArea fx:id="dialog" editable="false" layoutX="3.0" layoutY="260.0" prefHeight="87.0" prefWidth="645.0" />
+      <ListView fx:id="listView" layoutX="-1.0" layoutY="349.0" prefHeight="317.0" prefWidth="648.0" />
+      <Button fx:id="quote" layoutX="406.0" layoutY="83.0" mnemonicParsing="false" onAction="#addInspiration" text="Inspiration!" />
    </children>
 </AnchorPane>

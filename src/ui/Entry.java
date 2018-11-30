@@ -54,6 +54,13 @@ public class Entry {
         this.dateDone = dateDone;
     }
 
+    @Override
+    public String toString() {
+        return    name  +
+                ", Due Date:" + dueDate +
+                ", Days Left until its Due:" + daysLeft +
+                ", Status='" + status + '\'' ;
+    }
 
     public void setEntryManager(EntryManager e) {
         if (!e.equals(entryManager)) {

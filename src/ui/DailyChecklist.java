@@ -28,7 +28,7 @@ public class DailyChecklist extends EntryManager {
         super.newEntry(value, date1.today);
     }
 
-    public void checkOffDL(String value) throws InvalidItemException {
+    public void markDoneDL(String value) throws InvalidItemException {
         LocalDate tomorrow = date1.tomorrow;
         super.checkOffEntries(value, 1, tomorrow);
     }

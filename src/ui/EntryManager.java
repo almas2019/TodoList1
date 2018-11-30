@@ -7,8 +7,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 public abstract class EntryManager extends Observable {
-    public ArrayList<Entry> listentries = new ArrayList<>();
-    Entry entry = new Entry();
+    public List<Entry> listentries = new ArrayList<>();
+    protected Entry entry;
     protected String DoneStatus;
     protected String NotDoneStatus;
     public DateFeatures date1 = new DateFeatures();
@@ -35,16 +35,19 @@ public abstract class EntryManager extends Observable {
 
     protected void newEntry(String value, LocalDate date) {
         if (!(checkDuplicates(value))) {
-            Entry entry = new Entry();
+            entry = new Entry();
             listentries.add(entry);
             entry.setName(value);
             entry.setStatus(NotDoneStatus);
             entry.setDueDate(date);
             entry.setDaysLeft(date1.getDayCount(entry.getDueDate()));
-            this.entry =entry;
+            this.entry = entry;
             entry.setEntryManager(this);
 
         }
+    }
+    public Entry getEntry(){
+        return entry;
     }
 public void whatDone(){
     System.out.println("What task are you done?");
@@ -80,7 +83,7 @@ public void whatDone(){
     //REQUIRES: Non empty list
     //Modifies: this
     //Effects: changes a user specified entry to done
-//    public  void checkOffRL(String value) throws InvalidItemException {
+//    public  void markDoneRL(String value) throws InvalidItemException {
 //        System.out.println("What task are you done?");
 //        print();
 //        System.out.println("These are the tasks that are done:");
@@ -143,5 +146,9 @@ public void whatDone(){
                 ", Due Date='"+ entry.getDueDate()+
                 +
                 '}';
+    }
+
+    public List<Entry> getListentries() {
+        return listentries;
     }
 }

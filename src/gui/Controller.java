@@ -4,6 +4,7 @@ import Exceptions.InvalidItemException;
 import Model.ModelFunctions;
 import WebsiteParser.InspirationalQuotes;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +20,7 @@ import java.io.PrintStream;
 import java.time.LocalDate;
 
 public class Controller {
-    public Controller() {
+    public Controller () {
     }
 
     public TextArea dialog = new TextArea();
@@ -27,28 +28,77 @@ public class Controller {
     public TextField field = new TextField();
     public Button enter = new Button();
     public MenuItem reg = new MenuItem();
-    public MenuItem quote = new MenuItem();
+    public Button quote = new Button();
     public MenuItem daily = new MenuItem();
-    public MenuButton listOption = new MenuButton();
+    public MenuButton chooseList = new MenuButton();
     public MenuItem add = new MenuItem();
+    public MenuItem markDoneButton = new MenuItem();
     public MenuItem remove = new MenuItem();
     public MenuItem seeAll = new MenuItem();
     public MenuItem move = new MenuItem();
-    public MenuButton editListsButton = new MenuButton();
+    public MenuButton listOptions = new MenuButton();
     private String text = "";
     public Button enter2 = new Button();
     private InspirationalQuotes iq = new InspirationalQuotes();
     public DatePicker dp = new DatePicker();
+    public MenuItem saveRL = new MenuItem();
+    public MenuItem saveDL = new MenuItem();
+    public MenuItem loadRL = new MenuItem();
+    public MenuItem loadDL = new MenuItem();
     private LocalDate localDate;
-    private ObservableList<Entry> DLnotDone;
-    private ObservableList<Entry> RLnotDone;
-    private ObservableList<Entry> DLDone;
-    private ObservableList<Entry> RLDone;
-    private ListView<Entry> listView;
+    @FXML
+    public ListView<Entry> listView;
+private ObservableList<Entry> obsList = FXCollections.observableArrayList();
 
-    ModelFunctions mf = new ModelFunctions();
+ModelFunctions mf = new ModelFunctions();
     EntryManager em;
     FileManager fileManager = new FileManager();
+private void ListSave(EntryManager em) throws IOException, JSONException {
+    redirectSystemStreams();
+        textBoxVisible();
+        System.out.println("Please enter the name of the file");
+        enter.setOnAction((ActionEvent event) -> {
+            text = field.getText();
+            try {
+                fileManager.save(text, em);
+                System.out.println(em.getListName() + " " + "Saved!");
+                textBoxInVisible();
+            } catch (IOException e) {
+                System.out.println("IO Exception Thrown");
+                e.printStackTrace();
+            } catch (JSONException e) {
+                System.out.println("JSON Exception Thrown");
+                e.printStackTrace();
+            }
+        });
+
+    }
+    public void saveDailyList() throws IOException, JSONException {
+    ListSave(mf.dailyChecklist);
+    }
+    public void saveRegularList() throws IOException, JSONException {
+        ListSave(mf.regularEntries);
+    }
+    private void ListLoad(EntryManager em) throws IOException, JSONException {
+        redirectSystemStreams();
+        textBoxVisible();
+        System.out.println("Please enter the name of the file with the list you want to loadArray");
+        ;
+        enter.setOnAction((ActionEvent event) -> {
+            text = field.getText();
+                fileManager.parse(text, em);
+                textBoxInVisible();
+                setListView(em);
+
+            });
+    }
+    public void loadDailyList() throws IOException, JSONException {
+    ListLoad(mf.dailyChecklist);
+    }
+    public void loadRegularList()throws IOException, JSONException {
+        ListLoad(mf.regularEntries);
+    }
+
 private String DAILY_CHECKLIST_NAME = mf.dailyChecklist.getListName();
 private String REGULAR_LIST_NAME = mf.regularEntries.getListName();
     private void chooseList(String name, EntryManager manager) {
@@ -56,8 +106,9 @@ private String REGULAR_LIST_NAME = mf.regularEntries.getListName();
         System.out.println("Welcome to the" + " "+ name);
         System.out.println("Please Select an Option");
         em = manager;
-        listOption.setVisible(false);
-        editListsButton.setVisible(true);
+        chooseList.setVisible(false);
+        listOptions.setVisible(true);
+        setListView();
     }
     public void chooseRegList() {
         chooseList(REGULAR_LIST_NAME, mf.regularEntries);
@@ -67,17 +118,10 @@ private String REGULAR_LIST_NAME = mf.regularEntries.getListName();
 
     }
 public void showAllItems(){
-    Platform.runLater(() ->{
-        if (em.getListName().equals(DAILY_CHECKLIST_NAME)){
-            mf.dailyChecklist.print();
-    }
-    if (em.getListName().equals(REGULAR_LIST_NAME)){
-            mf.regularEntries.print();
-    }
-} );
-}
-
+        setListView();}
+@FXML
 public void addInspiration() throws IOException, JSONException {
+        redirectSystemStreams();
         iq.inspiration();
 }
 
@@ -97,27 +141,37 @@ this.text = t;
 
 
 private void addtoDailyList() {
-    editListsButton.setVisible(false);
+    listOptions.setVisible(false);
     enter.setOnAction((ActionEvent event) -> {
         System.out.println("Item Added");
         mf.dailyChecklist.newEntry(field.getText());
         textBoxInVisible();
         field.clear();
-        listOption.setVisible(true);
+        chooseList.setVisible(true);
+        mf.sizeofLists(em);
+        setListView();
     });
 }
-//private void addtoObservableList(EntryManager em, ObservableList obs){
-//        String DONE = em.getDoneStatus();
-//        String NOTDONE = em.getNotDoneStatus();
-//        for(Entry e: em.listentries){
-//            if (e.getStatus().equals(NOTDONE)){
-//
-//            }
-//        }
-//
-//}
+
+private void setListView(EntryManager em){
+    obsList = FXCollections.observableArrayList(em.listentries);
+    listView.toString();
+    listView.setItems(obsList);
+}
+
+    @FXML
+private void setListView(){
+           obsList = FXCollections.observableArrayList(em.listentries);
+           listView.toString();
+       listView.setItems(obsList);}
+
+private String getSelectedItemName() {
+ return (listView.getSelectionModel().getSelectedItem().getName());
+    }
+
+
     private void addtoRegularEntries() {
-        editListsButton.setVisible(false);
+        listOptions.setVisible(false);
             enter.setOnAction((ActionEvent event) -> {
 
                     System.out.println("Now Please Select the Date it's due");
@@ -129,11 +183,13 @@ private void addtoDailyList() {
                     enter2.setOnAction((ActionEvent e) -> {
                                 localDate = dp.getValue();
                                 mf.regularEntries.newEntry(text, localDate);
-                                listOption.setVisible(true);
+                                chooseList.setVisible(true);
                                 dp.setVisible(false);
                                 dp.setValue(null);
                         System.out.println("Item Added");
                         enter2.setVisible(false);
+                        mf.sizeofLists(em);
+                        setListView();
                             });
                     });
 
@@ -146,49 +202,82 @@ private void addtoDailyList() {
            addtoDailyList();
         } else if (em.getListName().equals(REGULAR_LIST_NAME)) {
             addtoRegularEntries();
-        }
-        mf.sizeofLists(em);
-    }
-    public void removeItems(){
-        System.out.println("Please enter the name of the item");
-        textBoxVisible();
-        em.whatDone();
-        enter.setOnAction((ActionEvent event) -> {
-            try {
-                if (em.getListName().equals(DAILY_CHECKLIST_NAME)){
-                    mf.dailyChecklist.checkOffDL(field.getText());
-                }
-                else if (em.getListName().equals(REGULAR_LIST_NAME)){
-                    mf.regularEntries.checkOffRL(field.getText());
-                }
-                em.taskDonePrint();
-                mf.sizeofLists(em);
-            } catch (InvalidItemException e) {
-                System.out.println(e.getMessage());
-            }
-            textBoxInVisible();
-            field.clear();
-            listOption.setVisible(true);
-            editListsButton.setVisible(false);
-        });
-    }
-    public void moveItems(){
-        System.out.println("What would you like to move?");
-        editListsButton.setVisible(false);
-        textBoxVisible();
-        em.print();
-        enter.setOnAction((ActionEvent event) -> {
-            try {
-                mf.moveEntry(field.getText());
-                System.out.println("Item Moved!");
-            } catch (InvalidItemException e) {
-                System.out.println(e.getMessage());
-            }
-            textBoxInVisible();
-            field.clear();
-            listOption.setVisible(true);
 
-        });
+
+
+        }
+    }
+    public void removeItems() {
+        listOptions.setVisible(false);
+        if(!checkIfEmpty()) {
+            System.out.println("Please select the item you wish to remove and press enter");
+            enter.setVisible(true);
+            enter.setOnAction((ActionEvent event) -> {
+                em.listentries.remove(listView.getSelectionModel().getSelectedItem());
+                listView.refresh();
+                System.out.println("Item Removed!");
+                mf.sizeofLists(em);
+                enter.setVisible(false);
+                chooseList.setVisible(true);
+                setListView();
+            });
+        }
+    }
+private boolean checkIfEmpty(){
+    if (em.listentries.isEmpty()) {
+        System.out.println("There are no items on this List");
+        chooseList.setVisible(true);
+        listOptions.setVisible(false);
+        return true;
+    }
+    return false;
+}
+
+
+    public void markDone(){
+        if (!checkIfEmpty()) {
+            System.out.println("Please select the item in the list below that is done and press enter");
+            enter.setVisible(true);
+            enter.setOnAction((ActionEvent event) -> {
+                try {
+                    if (em.getListName().equals(DAILY_CHECKLIST_NAME)) {
+                        mf.dailyChecklist.markDoneDL(getSelectedItemName());
+                        listView.refresh();
+                    } else if (em.getListName().equals(REGULAR_LIST_NAME)) {
+                        mf.regularEntries.markDoneRL(getSelectedItemName());
+                        listView.refresh();
+                    }
+                    em.taskDonePrint();
+                    mf.sizeofLists(em);
+                } catch (InvalidItemException e) {
+                    System.out.println(e.getMessage());
+                }
+
+                chooseList.setVisible(true);
+                listOptions.setVisible(false);
+            });
+        }
+    }
+    public void moveItems() {
+        if (!checkIfEmpty()) {
+            System.out.println("What would you like to move?");
+            listOptions.setVisible(false);
+           enter.setVisible(true);
+            enter.setOnAction((ActionEvent event) -> {
+                try {
+                    mf.moveEntry(getSelectedItemName());
+                    System.out.println("Item Moved!");
+                } catch (InvalidItemException e) {
+                    System.out.println(e.getMessage());
+                }
+                textBoxInVisible();
+                field.clear();
+                chooseList.setVisible(true);
+                setListView();
+                listView.refresh();
+
+            });
+        }
     }
     private void updateTextArea(final String text) {
         Platform.runLater(() -> dialog.appendText(text));

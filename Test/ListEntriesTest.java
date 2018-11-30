@@ -48,7 +48,7 @@ public void testTakeout() {
     entry1.setDueDate(localdate);
     reg.addEntry(entry1);
     try {
-        reg.checkOffRL("fair");
+        reg.markDoneRL("fair");
     } catch (InvalidItemException e) {
         System.out.println(e.getMessage());
     }
@@ -60,12 +60,12 @@ public void testTakeout() {
     public void testnumdone() {
     reg.newEntry("fair",localdate);
     try {
-        reg.checkOffRL("fair");
+        reg.markDoneRL("fair");
     }catch (InvalidItemException e) {
         System.out.println("Failed on fair");
     }
     try {
-        reg.checkOffRL("talk");
+        reg.markDoneRL("talk");
     } catch (InvalidItemException e) {
         System.out.println("Passed on Talk");
     }

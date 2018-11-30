@@ -16,7 +16,7 @@ public class InvalidItemsTest {
 //    public void removeInvalidItemRegularEntries() {
 //        mf.enter("Radio","2018-02-02");
 //        try {
-//            mf.regularEntries.checkOffRL("Great");
+//            mf.regularEntries.markDoneRL("Great");
 //        } catch (InvalidItemException e) {
 //            System.out.println("Item not There!!!!");
 //        }
@@ -25,7 +25,7 @@ public class InvalidItemsTest {
 //public void removeValidItemRegularEntries() {
 //    mf.enter("Radio","2018-02-02");
 //    try {
-//        mf.regularEntries.checkOffRL("Radio");
+//        mf.regularEntries.markDoneRL("Radio");
 //    } catch (InvalidItemException e) {
 //        fail("Item not There!!!!");
 //    }}
@@ -34,7 +34,7 @@ public class InvalidItemsTest {
 //    public void removeInvalidItemDailyChecklist() {
 //        mf.enter("Radio");
 //        try {
-//            mf.dailyChecklist.checkOffRL("Great");
+//            mf.dailyChecklist.markDoneRL("Great");
 //        } catch (InvalidItemException e) {
 //            System.out.println("Item not There!!!!");
 //        }
@@ -43,7 +43,7 @@ public class InvalidItemsTest {
 //    public void removeValidDailyCheckList() {
 //        mf.enter("Radio");
 //        try {
-//            mf.dailyChecklist.checkOffRL("Radio");
+//            mf.dailyChecklist.markDoneRL("Radio");
 //        } catch (InvalidItemException e) {
 //            fail("Item not There!!!!");
 //        }

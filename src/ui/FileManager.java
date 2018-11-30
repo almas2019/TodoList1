@@ -1,6 +1,5 @@
 package ui;
 
-import Model.ModelFunctions;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +36,7 @@ public class FileManager implements Saveable, Loadable {
         try {
             InputStream is = new FileInputStream(s+".json");
             String jsonData =  readSource(is);
-            load(jsonData,em);
+            loadArray(jsonData,em);
             System.out.println(em.getListName()+" "+"Loaded!");
         } catch (IOException e) {
             System.out.println("Error reading file...");
@@ -63,7 +62,7 @@ public class FileManager implements Saveable, Loadable {
         return sb.toString();
     }
 
-    public void load(String jsondata, EntryManager em) throws JSONException {
+    public void loadArray(String jsondata, EntryManager em) throws JSONException {
         JSONArray aTodoList = new JSONArray(jsondata);
         if (aTodoList.get(0).equals(DAILY_CHECKLIST_NAME)) {
             em = (DailyChecklist) em;

@@ -23,7 +23,7 @@ public class RegularEntries extends EntryManager {
         this.DoneStatus= "Done";
         this.NotDoneStatus = "Not Done";}
 
-    public void checkOffRL(String value) throws InvalidItemException {
+    public void markDoneRL(String value) throws InvalidItemException {
         super.checkOffEntries(value,0,entry.getDueDate());
     }
 
