@@ -19,7 +19,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.List;
-
+//Found latest version of Scene Builder based on recommendation from this article https://dzone.com/articles/bye-bye-javafx-scene-builder
 public class Controller {
     public Controller () {
     }
@@ -88,7 +88,7 @@ private void ListSave(EntryManager em) throws IOException, JSONException {
     public void saveRegularList() throws IOException, JSONException {
         ListSave(mf.regularEntries);
     }
-    private void ListLoad(EntryManager em) throws IOException, JSONException {
+    private void ListLoad(EntryManager em) {
         redirectSystemStreams();
         textBoxVisible();
         System.out.println("Please enter the name of the file with the list you want to loadArray");
@@ -153,7 +153,6 @@ this.text = t;
         enter.setVisible(false);
     }
 
-
 private void addtoDailyList() {
     listOptions.setVisible(false);
     enter.setOnAction((ActionEvent event) -> {
@@ -165,7 +164,9 @@ private void addtoDailyList() {
      notDoneListView();
     });
 }
-
+//How to set List of View idea similar to https://stackoverflow.com/questions/36629522/convert-arraylist-to-observable-list-for-javafx-program
+//Stack Overflow User James D gave an example about Combo Boxes and I read it and applied the concepts to my code
+// Also Oracle Docs on ListView were helpful
 private void setListView(EntryManager em){
     obsList = FXCollections.observableArrayList(em.listentries);
     listView.toString();
@@ -174,11 +175,10 @@ private void setListView(EntryManager em){
 
     @FXML
 private void setListView(List<Entry> e){
-//           obsList = FXCollections.observableArrayList(em.listentries);
         obsList = FXCollections.observableArrayList(e);
         listView.toString();
        listView.setItems(obsList);}
-
+//Oracle Docs on List View were helpful for this https://docs.oracle.com/javafx/2/ui_controls/list-view.htm
 private String getSelectedItemName() {
  return (listView.getSelectionModel().getSelectedItem().getName());
     }
@@ -303,6 +303,8 @@ private boolean checkIfEmpty(){
             });
         }
     }
+    //Code from Hung Hyun CodeSmart Blog with 1 minor edit suggested by TA Brandon from 210 changed a Swing Utilities code to Platform.runLater
+    //Brandon based his recommendation on answer from User sheepy in StackOverflow about using Platform.runLater (https://stackoverflow.com/questions/30863862/javafx-append-text-to-textarea-throws-exception)
     private void updateTextArea(final String text) {
         Platform.runLater(() -> dialog.appendText(text));
     }
